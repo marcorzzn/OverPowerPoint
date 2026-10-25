@@ -32,7 +32,7 @@ Suite creativa offline in un unico file HTML: presentazioni, grafica, foto, vett
 
 1. Apri l'URL o il file.
 2. Ribbon → schede Home / Inserisci / Foto / Effetti.
-3. `Ctrl+K` per la palette comandi (244 comandi).
+3. `Ctrl+K` per la palette comandi (246 comandi).
 4. Salva con `Ctrl+S`, esporta con `Ctrl+E`.
 5. Gli effetti si aprono dalla scheda **Effetti**: scegli una card, lavora, premi **Invia a OPP**.
 
@@ -51,3 +51,4 @@ Tutti i diritti riservati (nessuna licenza open source è stata concessa).
 ## Crediti
 
 Ispirato a PowerPoint, Photoshop, Illustrator. Costruito con AI come pair programmer, con revisione umana di ogni riga.
+
