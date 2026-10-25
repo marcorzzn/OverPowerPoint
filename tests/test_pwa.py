@@ -7,7 +7,6 @@ from __future__ import annotations
 
 import json
 import pathlib
-import socket
 import subprocess
 import sys
 import time
@@ -29,11 +28,6 @@ def serve() -> None:
     handler = functools.partial(http.server.SimpleHTTPRequestHandler, directory=str(ROOT))
     server = http.server.ThreadingHTTPServer(("127.0.0.1", PORT), handler)
     threading.Thread(target=server.serve_forever, daemon=True).start()
-
-
-def free_port() -> bool:
-    with socket.socket() as s:
-        return s.connect_ex(("127.0.0.1", PORT)) != 0
 
 
 def wait_sw(page) -> bool:
