@@ -26,4 +26,5 @@ tests/_export_probe.html
 *.bak
 *.singleline.bak.html
 *.preformat.html
+*.zip
 

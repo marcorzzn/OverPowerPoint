@@ -2,7 +2,7 @@
  * Cambia CACHE (opp-v1 → opp-v2) ogni volta che modifichi index.html o questo file,
  * altrimenti i browser restano sulla versione in cache.
  */
-const CACHE = "opp-v1";
+const CACHE = "opp-v2";
 const CORE = [
   "./index.html",
   "./manifest.json",

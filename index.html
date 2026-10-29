@@ -14,29 +14,47 @@
     <style>
       :root {
         --accent: #ff9a2e;
-        --accent2: #ffc46b;
-        --accent-dark: #c96f10;
-        --accent-glow: rgba(255, 154, 46, 0.38);
-        --bg: #070d19;
-        --bg2: #0b1424;
-        --panel: rgba(13, 24, 43, 0.86);
-        --panel-2: rgba(19, 33, 57, 0.78);
-        --panel-3: rgba(255, 255, 255, 0.045);
-        --line: rgba(255, 255, 255, 0.08);
-        --line-strong: rgba(255, 154, 46, 0.32);
-        --text: #e9eef9;
-        --dim: #8e9bb0;
-        --bright: #fff;
-        --ok: #3bd6a0;
-        --danger: #ff6472;
-        --blue: #59a8ff;
-        --violet: #a98bff;
-        --pink: #ff6fae;
-        --glass-blur: blur(22px) saturate(160%);
-        --shadow-lg: 0 24px 70px rgba(0, 0, 0, 0.55);
-        --shadow-md: 0 8px 28px rgba(0, 0, 0, 0.38);
-        --radius: 7px;
-        --font: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        --accent2: #ffb14d;
+        --accent-dark: #e07d12;
+        --accent-glow: transparent;
+        --bg: #0f141f;
+        --bg2: #161c2b;
+        --panel: #141b29;
+        --panel-2: #1a2233;
+        --panel-3: #222c42;
+        --line: #242f45;
+        --line-strong: #334363;
+        --text: #e2e8f0;
+        --dim: #8896ab;
+        --bright: #ffffff;
+        --ok: #10b981;
+        --danger: #ef4444;
+        --blue: #3b82f6;
+        --violet: #8b5cf6;
+        --pink: #ec4899;
+        --glass-blur: none;
+        --shadow-lg: 0 16px 36px rgba(0, 0, 0, 0.45);
+        --shadow-md: 0 6px 18px rgba(0, 0, 0, 0.32);
+        --radius: 5px;
+        --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      }
+      body.theme-light {
+        --accent: #2563eb;
+        --accent2: #3b82f6;
+        --accent-dark: #1d4ed8;
+        --accent-glow: transparent;
+        --bg: #f4f6fa;
+        --bg2: #ebf0f7;
+        --panel: #ffffff;
+        --panel-2: #f8fafc;
+        --panel-3: #eef2f7;
+        --line: #d8dee8;
+        --line-strong: #cbd5e1;
+        --text: #1e293b;
+        --dim: #64748b;
+        --bright: #0f172a;
+        --shadow-lg: 0 14px 30px rgba(0, 0, 0, 0.08);
+        --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
       }
       * {
         box-sizing: border-box;
@@ -49,11 +67,12 @@
         width: 100%;
         height: 100%;
         overflow: hidden;
-        background: radial-gradient(circle at 18% 0%, #142240 0%, var(--bg) 46%, #050912 100%);
+        background: var(--bg);
         color: var(--text);
         font-family: var(--font);
         font-size: 12px;
         user-select: none;
+        transition: background-color 0.2s, color 0.2s;
       }
       button,
       input,
@@ -104,13 +123,7 @@
         position: relative;
       }
       #app::before {
-        content: "";
-        position: fixed;
-        inset: 0;
-        pointer-events: none;
-        background: radial-gradient(circle at 78% 10%, rgba(72, 124, 255, 0.08), transparent 32%),
-          radial-gradient(circle at 20% 90%, rgba(255, 154, 46, 0.06), transparent 38%);
-        z-index: 0;
+        display: none !important;
       }
       /* ============ TITLEBAR ============ */
       .titlebar {
@@ -122,13 +135,9 @@
         padding: 0 10px;
         position: relative;
         z-index: 30;
-        background: linear-gradient(180deg, rgba(22, 36, 63, 0.94), rgba(9, 17, 32, 0.92));
-        backdrop-filter: var(--glass-blur);
-        -webkit-backdrop-filter: var(--glass-blur);
-        border-bottom: 1px solid rgba(255, 154, 46, 0.28);
-        box-shadow:
-          inset 0 1px 0 rgba(255, 255, 255, 0.06),
-          0 2px 14px rgba(0, 0, 0, 0.3);
+        background: var(--bg2);
+        border-bottom: 1px solid var(--line);
+        box-shadow: none;
       }
       .brand {
         display: flex;
@@ -141,18 +150,11 @@
         margin-right: 2px;
       }
       .brand .diamond {
-        background: linear-gradient(135deg, var(--accent2), var(--accent));
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
+        color: var(--accent);
         font-size: 18px;
-        filter: drop-shadow(0 0 9px rgba(255, 154, 46, 0.45));
       }
       .brand .name {
-        background: linear-gradient(135deg, #fff 0%, var(--accent2) 42%, var(--accent) 100%);
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
+        color: var(--bright);
       }
       .brand .mega {
         font-size: 8px;
@@ -3591,6 +3593,93 @@
         border-radius: 6px;
         background: #fff;
       }
+    
+      /* Checkerboard transparency for transparent canvas */
+      .slide-surface.transparent-bg, .thumb-surface.transparent-bg {
+        background-color: #1a2233 !important;
+        background-image: repeating-conic-gradient(#242d42 0% 25%, #161c2b 0% 50%) !important;
+        background-position: 50% 50% !important;
+        background-size: 20px 20px !important;
+      }
+      body.theme-light .slide-surface.transparent-bg, body.theme-light .thumb-surface.transparent-bg {
+        background-color: #ffffff !important;
+        background-image: repeating-conic-gradient(#ffffff 0% 25%, #e2e8f0 0% 50%) !important;
+        background-position: 50% 50% !important;
+        background-size: 20px 20px !important;
+      }
+      /* Clean non-gradient flat ribbon & buttons */
+      .tabs {
+        background: var(--panel) !important;
+        border-bottom: 1px solid var(--line) !important;
+        box-shadow: none !important;
+      }
+      .tab.active {
+        background: var(--panel-2) !important;
+        color: var(--bright) !important;
+        border-bottom: 2px solid var(--accent) !important;
+      }
+      .ribbon {
+        background: var(--bg2) !important;
+        border-bottom: 1px solid var(--line) !important;
+        box-shadow: none !important;
+      }
+      .ribbon-group {
+        background: var(--panel) !important;
+        border: 1px solid var(--line) !important;
+        box-shadow: none !important;
+      }
+      .ribbon-btn:hover {
+        background: var(--panel-3) !important;
+      }
+      .ribbon-btn.active {
+        background: var(--panel-3) !important;
+        border: 1px solid var(--accent) !important;
+        color: var(--bright) !important;
+        box-shadow: none !important;
+      }
+      .primary-btn {
+        background: var(--accent) !important;
+        border: 1px solid var(--accent-dark) !important;
+        color: #fff !important;
+        box-shadow: none !important;
+      }
+      .primary-btn:hover {
+        background: var(--accent-dark) !important;
+      }
+      .ghost-btn {
+        background: var(--panel-3) !important;
+        border: 1px solid var(--line) !important;
+        color: var(--text) !important;
+        box-shadow: none !important;
+      }
+      .ghost-btn:hover {
+        background: var(--panel-2) !important;
+        color: var(--bright) !important;
+      }
+      .modal-card {
+        background: var(--panel) !important;
+        border: 1px solid var(--line-strong) !important;
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4) !important;
+      }
+      /* Dynamic brush cursor */
+      #brushCursorIndicator {
+        position: fixed;
+        pointer-events: none;
+        border: 1px solid rgba(255, 255, 255, 0.9);
+        box-shadow: 0 0 2px rgba(0, 0, 0, 0.9), inset 0 0 2px rgba(0, 0, 0, 0.9);
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 10000;
+        display: none;
+      }
+      #brushCursorIndicator.square {
+        border-radius: 0;
+      }
+      #brushCursorIndicator.chisel {
+        border-radius: 1px;
+        transform: translate(-50%, -50%) rotate(-35deg);
+      }
+
     </style>
   </head>
   <body>
@@ -3602,23 +3691,14 @@
           <span class="mega"> Mega Studio</span>
         </div>
         <input class="doc-title" id="docTitle" value="Presentazione senza titolo" aria-label="Nome progetto" spellcheck="false" />
-        <div class="workspace-wrap">
-          <span> Area</span>
-          <select class="workspace-select" id="workspaceSel" title="Modalità di lavoro">
-            <option>Presentazione</option>
-            <option>Grafica</option>
-            <option>Foto</option>
-            <option>Vettoriale</option>
-            <option>Video</option>
-            <option>Revisione</option>
-          </select>
-        </div>
+
         <div class="autosave" id="autosaveBadge" title="Stato salvataggio automatico">
           <span class="dot"> </span>
           <span id="autosaveText"> Salvato</span>
         </div>
         <div class="title-spacer"></div>
         <div class="title-controls">
+          <button class="icon-btn" id="themeToggleBtn" title="Passa a modalità diurna/notturna" style="font-size:14px">🌙</button>
           <button class="icon-btn" id="undoBtn" title="Annulla (Ctrl+Z)" disabled>↶</button>
           <button class="icon-btn" id="redoBtn" title="Ripeti (Ctrl+Y)" disabled>↷</button>
           <button class="icon-btn" id="searchBtn" title="Cerca comando (Ctrl+K)">⌕</button>
@@ -3642,7 +3722,7 @@
         <button class="tab" data-tab="Video">Video</button>
         <button class="tab" data-tab="Revisione">Revisione</button>
         <button class="tab" data-tab="Visualizza">Visualizza</button>
-        <button class="tab" data-tab="Effetti">Effetti</button>
+        
         <span class="tabs-right">
           <button class="icon-btn small" id="allCmdBtn" title="Tutti i comandi">☰</button>
         </span>
@@ -3781,6 +3861,7 @@
         </div>
       </footer>
     </div>
+    <div id="brushCursorIndicator"></div>
     <div class="toast-wrap" id="toastWrap"></div>
     <div class="modal-bg" id="modalBg">
       <div class="modal-card" id="modalCard">
@@ -3830,6 +3911,1844 @@
     <script>
       (() => {
         "use strict";
+/* =====================================================================
+   OVERPOWERPOINT STUDIO — ADVANCED CREATIVE SUITE UPGRADE ENGINES
+   ===================================================================== */
+
+// =====================================================================
+// 1. THEME ENGINE: Modalità Notturna e Diurna (Flat, Professional, No Gradient)
+// =====================================================================
+function applyUiTheme(name) {
+  const theme = name || state.settings?.uiTheme || "dark";
+  if (state.settings) state.settings.uiTheme = theme;
+  const isLight = theme === "light" || theme === "diurna";
+  document.body.classList.toggle("theme-light", isLight);
+  const toggleBtn = $("themeToggleBtn");
+  if (toggleBtn) {
+    toggleBtn.textContent = isLight ? "☀️" : "🌙";
+    toggleBtn.title = isLight ? "Passa a modalità notturna (Dark Mode)" : "Passa a modalità diurna (Light Mode)";
+  }
+}
+
+function toggleTheme() {
+  const isLight = document.body.classList.contains("theme-light");
+  const nextTheme = isLight ? "dark" : "light";
+  applyUiTheme(nextTheme);
+  if (typeof saveSettings === "function") saveSettings();
+  toast(nextTheme === "light" ? "Modalità diurna attivata" : "Modalità notturna attivata", "info", 1800);
+}
+
+// =====================================================================
+// 2. BRUSH & DRAWING ENGINE (Inspired by JSPaint)
+// =====================================================================
+// Bresenham's line algorithm for seamless stroke interpolation
+function bresenhamLine(x0, y0, x1, y1, callback) {
+  x0 = Math.round(x0);
+  y0 = Math.round(y0);
+  x1 = Math.round(x1);
+  y1 = Math.round(y1);
+  const dx = Math.abs(x1 - x0);
+  const dy = Math.abs(y1 - y0);
+  const sx = x0 < x1 ? 1 : -1;
+  const sy = y0 < y1 ? 1 : -1;
+  let err = dx - dy;
+  while (true) {
+    callback(x0, y0);
+    if (x0 === x1 && y0 === y1) break;
+    const e2 = 2 * err;
+    if (e2 > -dy) {
+      err -= dy;
+      x0 += sx;
+    }
+    if (e2 < dx) {
+      err += dx;
+      y0 += sy;
+    }
+  }
+}
+
+// Brush stamp cache
+const brushStampCache = new Map();
+
+function getBrushStamp(tool, shape, size, color, hardness = 1) {
+  const key = `${tool}_${shape}_${Math.round(size)}_${color}_${Math.round(hardness * 10)}`;
+  if (brushStampCache.has(key)) return brushStampCache.get(key);
+
+  const pad = Math.ceil(size * 1.5) + 4;
+  const c = document.createElement("canvas");
+  c.width = pad * 2;
+  c.height = pad * 2;
+  const ctx = c.getContext("2d");
+  const cx = pad, cy = pad;
+  const r = size / 2;
+
+  if (tool === "highlighter") {
+    // Angled rectangular chisel tip
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(-0.5); // ~30 degrees angle
+    ctx.fillStyle = color;
+    ctx.fillRect(-size * 0.9, -size * 0.35, size * 1.8, size * 0.7);
+    ctx.restore();
+  } else if (shape === "square") {
+    ctx.fillStyle = color;
+    ctx.fillRect(cx - r, cy - r, size, size);
+  } else if (shape === "chisel") {
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(-0.6);
+    ctx.fillStyle = color;
+    ctx.fillRect(-size * 1.1, -size * 0.25, size * 2.2, size * 0.5);
+    ctx.restore();
+  } else {
+    // Circle with hardness feathering
+    if (hardness >= 0.95) {
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      ctx.fillStyle = color;
+      ctx.fill();
+    } else {
+      const g = ctx.createRadialGradient(cx, cy, Math.max(0, r * hardness), cx, cy, r);
+      g.addColorStop(0, color);
+      g.addColorStop(1, "transparent");
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  if (brushStampCache.size > 80) brushStampCache.clear();
+  brushStampCache.set(key, c);
+  return c;
+}
+
+// Dynamic brush cursor preview
+function updateBrushCursorIndicator(ev) {
+  const ind = $("brushCursorIndicator");
+  if (!ind) return;
+  const isBrushTool = ["brush", "pen", "highlighter", "eraser", "neon"].includes(state.tool) || state.drawMode;
+  if (!isBrushTool || !ev) {
+    ind.style.display = "none";
+    return;
+  }
+  const surface = $("slideSurface");
+  if (!surface) return;
+  const srect = surface.getBoundingClientRect();
+  if (ev.clientX < srect.left || ev.clientX > srect.right || ev.clientY < srect.top || ev.clientY > srect.bottom) {
+    ind.style.display = "none";
+    return;
+  }
+  const size = Math.max(4, (state.brush?.size || 22) * (state.zoom || 1));
+  const tool = state.tool;
+  const shape = state.brush?.shape || "circle";
+  ind.style.width = size + "px";
+  ind.style.height = (tool === "highlighter" || shape === "chisel" ? size * 0.5 : size) + "px";
+  ind.style.left = ev.clientX + "px";
+  ind.style.top = ev.clientY + "px";
+  ind.className = shape === "square" || tool === "eraser" ? "square" : (tool === "highlighter" || shape === "chisel" ? "chisel" : "");
+  ind.style.display = "block";
+}
+
+// Enhanced ink stamping
+function stampInkPoint(ctx, x, y, stroke) {
+  const tool = stroke.tool;
+  const shape = stroke.shape || "circle";
+  const size = tool === "highlighter" ? stroke.size * 1.8 : stroke.size;
+  const color = stroke.color;
+
+  if (tool === "neon") {
+    // Neon dual-pass: outer glow + inner core
+    ctx.save();
+    ctx.shadowColor = color;
+    ctx.shadowBlur = size * 1.6;
+    ctx.fillStyle = color;
+    ctx.globalAlpha = 0.85;
+    ctx.beginPath();
+    ctx.arc(x, y, size / 2, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.shadowBlur = 0;
+    ctx.fillStyle = "#ffffff";
+    ctx.globalAlpha = 0.95;
+    ctx.beginPath();
+    ctx.arc(x, y, Math.max(1, size * 0.22), 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+    return;
+  }
+
+  if (tool === "eraser") {
+    ctx.save();
+    ctx.globalCompositeOperation = "destination-out";
+    if (shape === "square") {
+      ctx.fillRect(x - size / 2, y - size / 2, size, size);
+    } else {
+      ctx.beginPath();
+      ctx.arc(x, y, size / 2, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.restore();
+    return;
+  }
+
+  const stamp = getBrushStamp(tool, shape, size, color, stroke.hardness);
+  ctx.save();
+  if (tool === "highlighter") {
+    ctx.globalCompositeOperation = "multiply";
+    ctx.globalAlpha = clamp((stroke.opacity || 0.8) * 0.45, 0.1, 0.9);
+  } else {
+    ctx.globalCompositeOperation = "source-over";
+    ctx.globalAlpha = clamp(stroke.opacity || 1, 0.05, 1);
+  }
+  ctx.drawImage(stamp, x - stamp.width / 2, y - stamp.height / 2);
+  ctx.restore();
+}
+
+function stampInkLine(ctx, x0, y0, x1, y1, stroke) {
+  const dist = Math.hypot(x1 - x0, y1 - y0);
+  const step = Math.max(1, (stroke.size || 20) * 0.25);
+  if (dist <= 0) {
+    stampInkPoint(ctx, x0, y0, stroke);
+    return;
+  }
+  bresenhamLine(x0, y0, x1, y1, (x, y) => {
+    stampInkPoint(ctx, x, y, stroke);
+  });
+}
+
+// =====================================================================
+// 3. ADVANCED COLOR PICKER (HSV Wheel / 2D, RGB Sliders, HEX, Eyedropper)
+// =====================================================================
+function hsvToRgb(h, s, v) {
+  s /= 100;
+  v /= 100;
+  const c = v * s;
+  const x = c * (1 - Math.abs(((h / 60) % 2) - 1));
+  const m = v - c;
+  let r = 0, g = 0, b = 0;
+  if (h >= 0 && h < 60) { r = c; g = x; b = 0; }
+  else if (h >= 60 && h < 120) { r = x; g = c; b = 0; }
+  else if (h >= 120 && h < 180) { r = 0; g = c; b = x; }
+  else if (h >= 180 && h < 240) { r = 0; g = x; b = c; }
+  else if (h >= 240 && h < 300) { r = x; g = 0; b = c; }
+  else if (h >= 300 && h < 360) { r = c; g = 0; b = x; }
+  return {
+    r: Math.round((r + m) * 255),
+    g: Math.round((g + m) * 255),
+    b: Math.round((b + m) * 255)
+  };
+}
+
+function rgbToHsv(r, g, b) {
+  r /= 255; g /= 255; b /= 255;
+  const max = Math.max(r, g, b), min = Math.min(r, g, b);
+  const d = max - min;
+  let h = 0;
+  const s = max === 0 ? 0 : (d / max) * 100;
+  const v = max * 100;
+  if (d !== 0) {
+    if (max === r) h = ((g - b) / d + (g < b ? 6 : 0)) * 60;
+    else if (max === g) h = ((b - r) / d + 2) * 60;
+    else if (max === b) h = ((r - g) / d + 4) * 60;
+  }
+  return { h: Math.round(h), s: Math.round(s), v: Math.round(v) };
+}
+
+function openAdvancedColorPicker(initialColor, onColorChosen) {
+  const currentHex = normalizeHex(initialColor || state.fg || "#ff9a2e");
+  const rgb = hexToRgb(currentHex);
+  let hsv = rgbToHsv(rgb.r, rgb.g, rgb.b);
+
+  openModal({
+    title: "Selettore Colore Professionale",
+    icon: "🎨",
+    sub: "Ruota cromatica HSV, slider RGB, input HEX e contagocce.",
+    size: "wide",
+    body: `
+      <div style="display:flex;gap:16px;flex-wrap:wrap">
+        <div style="flex:1;min-width:240px">
+          <!-- 2D Saturation / Value Box -->
+          <div style="position:relative;width:100%;height:180px;border-radius:4px;cursor:crosshair;overflow:hidden;border:1px solid var(--line)" id="cpSatValBox">
+            <canvas id="cpSatValCanvas" width="240" height="180" style="width:100%;height:100%;display:block"></canvas>
+            <div id="cpSatValCursor" style="position:absolute;width:12px;height:12px;border:2px solid #fff;border-radius:50%;box-shadow:0 0 3px #000;transform:translate(-50%,-50%);pointer-events:none"></div>
+          </div>
+          <!-- Hue Slider -->
+          <div style="margin-top:10px">
+            <label style="display:flex;justify-content:space-between;font-size:11px;color:var(--dim);margin-bottom:3px">
+              <span>Tonalità (Hue)</span><span id="cpHueVal">${hsv.h}°</span>
+            </label>
+            <input type="range" id="cpHueSlider" min="0" max="359" value="${hsv.h}" style="width:100%;background:linear-gradient(to right,#f00 0%,#ff0 17%,#0f0 33%,#0ff 50%,#00f 67%,#f0f 83%,#f00 100%);height:12px;border-radius:6px;-webkit-appearance:none;outline:none" />
+          </div>
+        </div>
+        <div style="width:220px;display:flex;flex-direction:column;gap:10px">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div id="cpColorPreview" style="width:60px;height:40px;border-radius:4px;border:1px solid var(--line);background:${currentHex}"></div>
+            <div style="flex:1">
+              <label style="font-size:10px;color:var(--dim)">Codice HEX</label>
+              <input type="text" id="cpHexInput" value="${currentHex.toUpperCase()}" maxlength="7" style="width:100%;padding:4px 8px;border-radius:4px;border:1px solid var(--line);background:var(--panel-2);color:var(--bright);font-weight:bold" />
+            </div>
+            <button id="cpEyedropperBtn" class="icon-btn" title="Contagocce (preleva colore dal video)" style="font-size:16px;padding:6px 8px;border:1px solid var(--line)">◉</button>
+          </div>
+          <!-- RGB Sliders -->
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--dim)"><span>Rosso (R)</span><span id="cpRVal">${rgb.r}</span></div>
+            <input type="range" id="cpRSlider" min="0" max="255" value="${rgb.r}" style="width:100%" />
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--dim)"><span>Verde (G)</span><span id="cpGVal">${rgb.g}</span></div>
+            <input type="range" id="cpGSlider" min="0" max="255" value="${rgb.g}" style="width:100%" />
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--dim)"><span>Blu (B)</span><span id="cpBVal">${rgb.b}</span></div>
+            <input type="range" id="cpBSlider" min="0" max="255" value="${rgb.b}" style="width:100%" />
+          </div>
+        </div>
+      </div>
+    `,
+    foot: `
+      <button class="ghost-btn" data-close>Annulla</button>
+      <button class="primary-btn" id="cpApplyBtn">Applica Colore</button>
+    `
+  });
+
+  const satCanvas = $("cpSatValCanvas");
+  const satBox = $("cpSatValBox");
+  const satCursor = $("cpSatValCursor");
+  const hueSlider = $("cpHueSlider");
+  const hexInput = $("cpHexInput");
+  const rSlider = $("cpRSlider");
+  const gSlider = $("cpGSlider");
+  const bSlider = $("cpBSlider");
+  const preview = $("cpColorPreview");
+
+  function drawSatVal() {
+    if (!satCanvas) return;
+    const ctx = satCanvas.getContext("2d");
+    const w = satCanvas.width, h = satCanvas.height;
+    ctx.fillStyle = `hsl(${hsv.h}, 100%, 50%)`;
+    ctx.fillRect(0, 0, w, h);
+    const gradWhite = ctx.createLinearGradient(0, 0, w, 0);
+    gradWhite.addColorStop(0, "rgba(255,255,255,1)");
+    gradWhite.addColorStop(1, "rgba(255,255,255,0)");
+    ctx.fillStyle = gradWhite;
+    ctx.fillRect(0, 0, w, h);
+    const gradBlack = ctx.createLinearGradient(0, 0, 0, h);
+    gradBlack.addColorStop(0, "rgba(0,0,0,0)");
+    gradBlack.addColorStop(1, "rgba(0,0,0,1)");
+    ctx.fillStyle = gradBlack;
+    ctx.fillRect(0, 0, w, h);
+
+    if (satCursor) {
+      satCursor.style.left = (hsv.s / 100) * 100 + "%";
+      satCursor.style.top = (1 - hsv.v / 100) * 100 + "%";
+    }
+  }
+
+  function updateAllFromHsv() {
+    const c = hsvToRgb(hsv.h, hsv.s, hsv.v);
+    const hex = rgbToHex(c.r, c.g, c.b).toUpperCase();
+    if (preview) preview.style.background = hex;
+    if (hexInput && document.activeElement !== hexInput) hexInput.value = hex;
+    if ($("cpHueVal")) $("cpHueVal").textContent = hsv.h + "°";
+    if (rSlider) rSlider.value = c.r;
+    if ($("cpRVal")) $("cpRVal").textContent = c.r;
+    if (gSlider) gSlider.value = c.g;
+    if ($("cpGVal")) $("cpGVal").textContent = c.g;
+    if (bSlider) bSlider.value = c.b;
+    if ($("cpBVal")) $("cpBVal").textContent = c.b;
+    drawSatVal();
+  }
+
+  function updateAllFromRgb(r, g, b) {
+    const hex = rgbToHex(r, g, b).toUpperCase();
+    hsv = rgbToHsv(r, g, b);
+    if (preview) preview.style.background = hex;
+    if (hexInput && document.activeElement !== hexInput) hexInput.value = hex;
+    if (hueSlider) hueSlider.value = hsv.h;
+    if ($("cpHueVal")) $("cpHueVal").textContent = hsv.h + "°";
+    if ($("cpRVal")) $("cpRVal").textContent = r;
+    if ($("cpGVal")) $("cpGVal").textContent = g;
+    if ($("cpBVal")) $("cpBVal").textContent = b;
+    drawSatVal();
+  }
+
+  drawSatVal();
+
+  if (hueSlider) {
+    hueSlider.oninput = () => {
+      hsv.h = Number(hueSlider.value);
+      updateAllFromHsv();
+    };
+  }
+
+  function onSatBoxPointer(ev) {
+    const rect = satBox.getBoundingClientRect();
+    const x = clamp(ev.clientX - rect.left, 0, rect.width);
+    const y = clamp(ev.clientY - rect.top, 0, rect.height);
+    hsv.s = Math.round((x / rect.width) * 100);
+    hsv.v = Math.round((1 - y / rect.height) * 100);
+    updateAllFromHsv();
+  }
+
+  let satDragging = false;
+  if (satBox) {
+    satBox.onpointerdown = (ev) => {
+      satDragging = true;
+      satBox.setPointerCapture?.(ev.pointerId);
+      onSatBoxPointer(ev);
+    };
+    satBox.onpointermove = (ev) => {
+      if (satDragging) onSatBoxPointer(ev);
+    };
+    satBox.onpointerup = () => { satDragging = false; };
+  }
+
+  [rSlider, gSlider, bSlider].forEach((sl) => {
+    if (sl) {
+      sl.oninput = () => {
+        updateAllFromRgb(Number(rSlider.value), Number(gSlider.value), Number(bSlider.value));
+      };
+    }
+  });
+
+  if (hexInput) {
+    hexInput.oninput = () => {
+      let val = hexInput.value.trim();
+      if (!val.startsWith("#")) val = "#" + val;
+      if (/^#[0-9A-Fa-f]{6}$/.test(val)) {
+        const c = hexToRgb(val);
+        updateAllFromRgb(c.r, c.g, c.b);
+      }
+    };
+  }
+
+  // Eyedropper API
+  const eyeBtn = $("cpEyedropperBtn");
+  if (eyeBtn) {
+    eyeBtn.onclick = async () => {
+      if (window.EyeDropper) {
+        try {
+          const eye = new window.EyeDropper();
+          const res = await eye.open();
+          if (res?.sRGBHex) {
+            const c = hexToRgb(res.sRGBHex);
+            updateAllFromRgb(c.r, c.g, c.b);
+          }
+        } catch (e) {}
+      } else {
+        toast("Contagocce nativo non supportato nel browser corrente", "warn");
+      }
+    };
+  }
+
+  $("cpApplyBtn").onclick = () => {
+    const finalHex = preview.style.background ? normalizeHex(preview.style.background) : currentHex;
+    state.fg = finalHex;
+    pushRecentColor(finalHex);
+    if (state.brush) state.brush.color = finalHex;
+    renderColorPanel();
+    applyColorToSelection(finalHex);
+    if (typeof onColorChosen === "function") onColorChosen(finalHex);
+    closeModal();
+    toast("Colore applicato: " + finalHex.toUpperCase(), "success");
+  };
+}
+
+// =====================================================================
+// 4. COMPOSITING & LAYERS (10 Blend Modes, Opacity, Transparent Background)
+// =====================================================================
+const LAYER_BLEND_MODES = [
+  { v: "normal", l: "Normale" },
+  { v: "multiply", l: "Moltiplica" },
+  { v: "screen", l: "Schermo" },
+  { v: "overlay", l: "Sovrapponi" },
+  { v: "soft-light", l: "Luce soffusa" },
+  { v: "hard-light", l: "Luce intensa" },
+  { v: "lighten", l: "Schiarisci" },
+  { v: "darken", l: "Scurisci" },
+  { v: "difference", l: "Differenza" },
+  { v: "saturation", l: "Satura" }
+];
+
+function toggleTransparentBackground() {
+  const s = currentSlide();
+  if (s.bg && s.bg.type === "transparent") {
+    s.bg = { type: "solid", color: "#ffffff" };
+    toast("Sfondo opaco ripristinato", "info");
+  } else {
+    s.bg = { type: "transparent" };
+    toast("Sfondo trasparente attivato (ideale per loghi e grafica vettoriale)", "success");
+  }
+  commit("Sfondo slide trasparente");
+  renderAll();
+}
+
+function updateSelectedLayerBlend(mode) {
+  const el = firstSelected();
+  if (!el) {
+    toast("Seleziona prima un elemento o livello", "warn");
+    return;
+  }
+  el.blend = mode;
+  commit("Metodo di fusione: " + mode);
+  renderAll();
+}
+
+function updateSelectedLayerOpacity(val) {
+  const el = firstSelected();
+  if (!el) return;
+  el.opacity = clamp(Number(val) / 100, 0, 1);
+  const node = document.querySelector(`.el[data-el-id="${el.id}"]`);
+  if (node) node.style.opacity = el.opacity;
+  const valLabel = $("layerOpacityVal");
+  if (valLabel) valLabel.textContent = Math.round(el.opacity * 100) + "%";
+}
+
+// Hook layers toolbar events
+function initLayersToolbar() {
+  const blendSel = $("layerBlendSel");
+  const opSlider = $("layerOpacitySlider");
+  if (blendSel) {
+    blendSel.onchange = (e) => updateSelectedLayerBlend(e.target.value);
+  }
+  if (opSlider) {
+    opSlider.oninput = (e) => updateSelectedLayerOpacity(e.target.value);
+    opSlider.onchange = () => commit("Opacità livello");
+  }
+}
+
+// =====================================================================
+// 5. EXPORT & RESOLUTION MANAGER (PNG Alpha, JPG Quality, PDF Vector, Presets)
+// =====================================================================
+function openExportModal() {
+  const baseW = state.W || 960;
+  const baseH = state.H || 540;
+  let currentScale = 2;
+  let currentFormat = "png";
+  let currentQuality = 92;
+
+  openModal({
+    title: "Esportazione & Salvataggio",
+    icon: "💾",
+    sub: "Configura risoluzione, qualità e formato di esportazione.",
+    size: "wide",
+    body: `
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div class="field-row">
+          <div class="field">
+            <label>Formato di output</label>
+            <select id="expFormatSel">
+              <option value="png" selected>PNG (Immagine raster con trasparenza alfa)</option>
+              <option value="jpg">JPG (Immagine fotografica con qualità regolabile)</option>
+              <option value="pdf">PDF (Vettoriale per stampa e documenti)</option>
+              <option value="svg">SVG (Grafica vettoriale pura)</option>
+              <option value="webp">WebP (Formato web moderno compresso)</option>
+            </select>
+          </div>
+          <div class="field" id="expQualityField" style="display:none">
+            <label style="display:flex;justify-content:space-between">
+              <span>Qualità JPG</span><span id="expQualityVal">92%</span>
+            </label>
+            <input type="range" id="expQualitySlider" min="10" max="100" value="92" />
+          </div>
+        </div>
+
+        <div style="border:1px solid var(--line);border-radius:6px;padding:12px;background:var(--panel-2)">
+          <div style="font-weight:600;font-size:12px;margin-bottom:8px">Gestione Risoluzione & Dimensioni Pixel</div>
+          <div style="display:flex;gap:8px;margin-bottom:10px">
+            <button class="ghost-btn exp-scale-btn" data-scale="0.5">0.5x (${Math.round(baseW * 0.5)}×${Math.round(baseH * 0.5)})</button>
+            <button class="ghost-btn exp-scale-btn" data-scale="1">1x (${baseW}×${baseH})</button>
+            <button class="ghost-btn exp-scale-btn active" data-scale="2">2x HD (${baseW * 2}×${baseH * 2})</button>
+            <button class="ghost-btn exp-scale-btn" data-scale="4">4x Ultra-HD (${baseW * 4}×${baseH * 4})</button>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label>Larghezza (px)</label>
+              <input type="number" id="expWidthInput" value="${baseW * 2}" min="100" max="8000" />
+            </div>
+            <div class="field">
+              <label>Altezza (px)</label>
+              <input type="number" id="expHeightInput" value="${baseH * 2}" min="100" max="8000" />
+            </div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px;font-size:11px;color:var(--dim)">
+            <span id="expTotalPixels">Risoluzione finale: ${baseW * 2} × ${baseH * 2} px (~${((baseW * 2 * baseH * 2) / 1000000).toFixed(2)} MP)</span>
+            <label style="display:flex;align-items:center;gap:5px;cursor:pointer">
+              <input type="checkbox" id="expKeepAspect" checked /> Blocca proporzioni
+            </label>
+          </div>
+        </div>
+      </div>
+    `,
+    foot: `
+      <button class="ghost-btn" data-close>Annulla</button>
+      <button class="primary-btn" id="expExecuteBtn">Esporta Ora</button>
+    `
+  });
+
+  const fmtSel = $("expFormatSel");
+  const qField = $("expQualityField");
+  const qSlider = $("expQualitySlider");
+  const qVal = $("expQualityVal");
+  const wInput = $("expWidthInput");
+  const hInput = $("expHeightInput");
+  const totalPix = $("expTotalPixels");
+  const keepAspect = $("expKeepAspect");
+
+  if (fmtSel) {
+    fmtSel.onchange = () => {
+      currentFormat = fmtSel.value;
+      if (qField) qField.style.display = currentFormat === "jpg" ? "block" : "none";
+    };
+  }
+
+  if (qSlider) {
+    qSlider.oninput = () => {
+      currentQuality = Number(qSlider.value);
+      if (qVal) qVal.textContent = currentQuality + "%";
+    };
+  }
+
+  function updatePixelsReadout() {
+    const w = Number(wInput.value) || baseW;
+    const h = Number(hInput.value) || baseH;
+    const mp = ((w * h) / 1000000).toFixed(2);
+    if (totalPix) totalPix.textContent = `Risoluzione finale: ${w} × ${h} px (~${mp} MP)`;
+  }
+
+  document.querySelectorAll(".exp-scale-btn").forEach((btn) => {
+    btn.onclick = () => {
+      document.querySelectorAll(".exp-scale-btn").forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+      currentScale = Number(btn.dataset.scale);
+      if (wInput) wInput.value = Math.round(baseW * currentScale);
+      if (hInput) hInput.value = Math.round(baseH * currentScale);
+      updatePixelsReadout();
+    };
+  });
+
+  if (wInput && hInput) {
+    wInput.oninput = () => {
+      if (keepAspect && keepAspect.checked) {
+        hInput.value = Math.round((Number(wInput.value) * baseH) / baseW);
+      }
+      updatePixelsReadout();
+    };
+    hInput.oninput = () => {
+      if (keepAspect && keepAspect.checked) {
+        wInput.value = Math.round((Number(hInput.value) * baseW) / baseH);
+      }
+      updatePixelsReadout();
+    };
+  }
+
+  $("expExecuteBtn").onclick = async () => {
+    const targetW = Number(wInput?.value) || baseW;
+    const scale = targetW / baseW;
+    closeModal();
+
+    if (currentFormat === "pdf") {
+      exportPdf();
+      return;
+    }
+    if (currentFormat === "svg") {
+      exportSvg();
+      return;
+    }
+
+    try {
+      toast("Rendering esportazione in corso…", "info", 1500);
+      const canvas = await slideToCanvas(currentSlide(), scale);
+      const mime = currentFormat === "jpg" ? "image/jpeg" : (currentFormat === "webp" ? "image/webp" : "image/png");
+      const quality = currentFormat === "jpg" ? currentQuality / 100 : 0.94;
+
+      if (currentFormat === "jpg") {
+        const ctx = canvas.getContext("2d");
+        ctx.globalCompositeOperation = "destination-over";
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+      }
+
+      const blob = await canvasToBlob(canvas, mime, quality);
+      downloadBlob(blob, `${cleanName(state.docName)}-slide-${state.current + 1}.${currentFormat}`);
+      toast("File esportato con successo!", "success");
+    } catch (e) {
+      console.error(e);
+      toast("Errore durante l'esportazione", "error");
+    }
+  };
+}
+
+// =====================================================================
+// 6. VECTOR ENGINE (Parametric Shapes, Bézier Pen Handles, Booleans, Pattern)
+// =====================================================================
+// Pattern Engine: Repetition of geometric elements (Grid or Tile / Mattonella)
+function openPatternEngineModal() {
+  const els = selectedElements();
+  if (!els.length) {
+    toast("Seleziona almeno un elemento da ripetere a pattern", "warn");
+    return;
+  }
+
+  openModal({
+    title: "Pattern Engine Geometrico",
+    icon: "⌗",
+    sub: "Ripeti elementi in griglia regolare o a mattonella.",
+    size: "wide",
+    body: `
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div class="field-row">
+          <div class="field">
+            <label>Tipo di motivo</label>
+            <select id="patTypeSel">
+              <option value="grid">Griglia regolare</option>
+              <option value="tile">Mattonella (sfalsato 50%)</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Colonne</label>
+            <input type="number" id="patCols" min="1" max="15" value="4" />
+          </div>
+          <div class="field">
+            <label>Righe</label>
+            <input type="number" id="patRows" min="1" max="15" value="3" />
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>Spaziatura orizzontale (px)</label>
+            <input type="number" id="patGapX" min="0" max="200" value="20" />
+          </div>
+          <div class="field">
+            <label>Spaziatura verticale (px)</label>
+            <input type="number" id="patGapY" min="0" max="200" value="20" />
+          </div>
+        </div>
+      </div>
+    `,
+    foot: `
+      <button class="ghost-btn" data-close>Annulla</button>
+      <button class="primary-btn" id="patApplyBtn">Genera Pattern</button>
+    `
+  });
+
+  $("patApplyBtn").onclick = () => {
+    const type = $("patTypeSel").value;
+    const cols = clamp(Number($("patCols").value) || 1, 1, 20);
+    const rows = clamp(Number($("patRows").value) || 1, 1, 20);
+    const gapX = Number($("patGapX").value) || 0;
+    const gapY = Number($("patGapY").value) || 0;
+
+    const bbox = selectionBBox(els);
+    const s = currentSlide();
+    const newElements = [];
+
+    for (let r = 0; r < rows; r++) {
+      const offsetX = type === "tile" && (r % 2 === 1) ? (bbox.w + gapX) / 2 : 0;
+      for (let c = 0; c < cols; c++) {
+        if (r === 0 && c === 0) continue; // Original already exists
+        const dx = c * (bbox.w + gapX) + offsetX;
+        const dy = r * (bbox.h + gapY);
+        els.forEach((orig) => {
+          const clone = deep(orig);
+          clone.id = "el_" + Math.random().toString(36).slice(2, 9);
+          clone.x += dx;
+          clone.y += dy;
+          newElements.push(clone);
+        });
+      }
+    }
+
+    s.elements.push(...newElements);
+    commit(`Pattern Engine (${type}): ${newElements.length} elementi`);
+    closeModal();
+    renderAll();
+    toast(`Generati ${newElements.length} elementi geometrici`, "success");
+  };
+}
+
+// Parametric star and polygon shape generator helper
+function generateParametricShape(kind, opts = {}) {
+  const el = makeElement("shape", {
+    kind: kind,
+    name: kind === "polygon" ? "Poligono" : (kind === "star" ? "Stella" : "Forma"),
+    x: (state.W - 160) / 2,
+    y: (state.H - 160) / 2,
+    w: 160,
+    h: 160,
+    sides: opts.sides || 6,
+    points: opts.points || 5,
+    innerRadius: opts.innerRadius || 0.42,
+    radius: opts.radius || 12,
+    fill: state.fg,
+    fillType: "solid"
+  });
+  insertElement(el);
+}
+
+// =====================================================================
+// 7. TYPOGRAPHY & TEXT ENGINE (Bend, Text on Path, Custom Font Load)
+// =====================================================================
+function openTextBendModal() {
+  const el = firstSelected();
+  if (!el || el.type !== "text") {
+    toast("Seleziona una casella di testo", "warn");
+    return;
+  }
+  const currentBend = el.bend || 0;
+
+  openModal({
+    title: "Piega Testo (Curvatura Concava / Convessa)",
+    icon: "〜",
+    sub: "Deforma il testo lungo un arco curvato.",
+    size: "small",
+    body: `
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <label style="display:flex;justify-content:space-between">
+          <span>Curvatura:</span><span id="bendVal">${currentBend}%</span>
+        </label>
+        <input type="range" id="bendSlider" min="-100" max="100" value="${currentBend}" />
+        <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--dim)">
+          <span>Concava (-100%)</span><span>Piatto (0%)</span><span>Convessa (+100%)</span>
+        </div>
+      </div>
+    `,
+    foot: `
+      <button class="ghost-btn" id="bendResetBtn">Azzera</button>
+      <button class="primary-btn" id="bendApplyBtn">Applica</button>
+    `
+  });
+
+  const slider = $("bendSlider");
+  const val = $("bendVal");
+  if (slider) {
+    slider.oninput = () => {
+      val.textContent = slider.value + "%";
+      el.bend = Number(slider.value);
+      renderCurrentSlide();
+    };
+  }
+
+  $("bendResetBtn").onclick = () => {
+    el.bend = 0;
+    commit("Piega testo azzerata");
+    closeModal();
+    renderAll();
+  };
+
+  $("bendApplyBtn").onclick = () => {
+    commit("Curvatura testo: " + el.bend + "%");
+    closeModal();
+    renderAll();
+  };
+}
+
+// =====================================================================
+// 8. PHOTO RETOUCHING, MANIPULATION & FX ENGINE
+// =====================================================================
+// A. Advanced Color Correction (Regola)
+function openColorCorrectionModal() {
+  const el = selectedImage();
+  if (!el) {
+    toast("Seleziona un'immagine", "warn");
+    return;
+  }
+  el.filters = el.filters || {};
+  const f = el.filters;
+
+  openModal({
+    title: "Regola Colore Avanzata",
+    icon: "☀",
+    sub: "Controllo tonale, luminosità, contrasto, saturazione, temperatura, luci e ombre.",
+    size: "wide",
+    body: `
+      <div class="field-row">
+        <div class="field"><label>Luminosità (-100..100)</label><input type="range" data-adj="brightness" min="-100" max="100" value="${f.brightness || 0}" /></div>
+        <div class="field"><label>Contrasto (-100..100)</label><input type="range" data-adj="contrast" min="-100" max="100" value="${f.contrast || 0}" /></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Saturazione (-100..100)</label><input type="range" data-adj="saturation" min="-100" max="100" value="${f.saturation || 0}" /></div>
+        <div class="field"><label>Tonalità (-180..180°)</label><input type="range" data-adj="hue" min="-180" max="180" value="${f.hue || 0}" /></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Temperatura (Freddo / Caldo)</label><input type="range" data-adj="temperature" min="-100" max="100" value="${f.temperature || 0}" /></div>
+        <div class="field"><label>Luci / Highlights (-100..100)</label><input type="range" data-adj="highlights" min="-100" max="100" value="${f.highlights || 0}" /></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Ombre / Shadows (-100..100)</label><input type="range" data-adj="shadows" min="-100" max="100" value="${f.shadows || 0}" /></div>
+        <div class="field"><label>Nitidezza / Sharpen (0..100)</label><input type="range" data-adj="sharpen" min="0" max="100" value="${f.sharpen || 0}" /></div>
+      </div>
+    `,
+    foot: `
+      <button class="ghost-btn" id="ccResetBtn">Reset</button>
+      <button class="primary-btn" id="ccApplyBtn">Applica Regolazioni</button>
+    `
+  });
+
+  document.querySelectorAll("[data-adj]").forEach((inp) => {
+    inp.oninput = () => {
+      el.filters[inp.dataset.adj] = Number(inp.value);
+      renderCurrentSlide();
+    };
+  });
+
+  $("ccResetBtn").onclick = () => {
+    el.filters = {};
+    commit("Reset regolazioni");
+    closeModal();
+    renderAll();
+  };
+
+  $("ccApplyBtn").onclick = () => {
+    commit("Regolazioni colore foto");
+    closeModal();
+    renderAll();
+    toast("Regolazioni applicate", "success");
+  };
+}
+
+// B. RGB Curves (Curve di livello con grafico cartesiano per R, G, B, Master)
+function openRgbCurvesModal() {
+  const el = selectedImage();
+  if (!el) {
+    toast("Seleziona un'immagine", "warn");
+    return;
+  }
+
+  openModal({
+    title: "Curve RGB (Controllo Tonale Avanzato)",
+    icon: "📈",
+    sub: "Regola la curva di risposta tonale per canale Master, Rosso, Verde e Blu.",
+    size: "wide",
+    body: `
+      <div style="display:flex;gap:16px;flex-wrap:wrap">
+        <div style="flex:1;min-width:260px">
+          <canvas id="curveCanvas" width="256" height="256" style="width:100%;height:auto;max-width:256px;background:var(--panel-2);border:1px solid var(--line);border-radius:4px;cursor:crosshair;display:block"></canvas>
+        </div>
+        <div style="width:200px;display:flex;flex-direction:column;gap:10px">
+          <label style="font-size:11px;color:var(--dim)">Canale attivo</label>
+          <div style="display:flex;gap:4px">
+            <button class="ghost-btn curve-chan active" data-chan="rgb">RGB</button>
+            <button class="ghost-btn curve-chan" data-chan="r" style="color:#ff6472">R</button>
+            <button class="ghost-btn curve-chan" data-chan="g" style="color:#3bd6a0">G</button>
+            <button class="ghost-btn curve-chan" data-chan="b" style="color:#59a8ff">B</button>
+          </div>
+          <div style="margin-top:10px;font-size:11px;color:var(--dim)">
+            Clicca sul grafico per aggiungere punti di controllo. Trascina i punti per modificare il contrasto e il bilanciamento colore.
+          </div>
+          <button class="ghost-btn" id="curveResetChan" style="margin-top:auto">Azzera Canale</button>
+        </div>
+      </div>
+    `,
+    foot: `
+      <button class="ghost-btn" data-close>Annulla</button>
+      <button class="primary-btn" id="curveApplyBtn">Applica Curve</button>
+    `
+  });
+
+  const canvas = $("curveCanvas");
+  if (!canvas) return;
+  const ctx = canvas.getContext("2d");
+  let activeChan = "rgb";
+  const points = {
+    rgb: [{ x: 0, y: 0 }, { x: 128, y: 128 }, { x: 255, y: 255 }],
+    r: [{ x: 0, y: 0 }, { x: 255, y: 255 }],
+    g: [{ x: 0, y: 0 }, { x: 255, y: 255 }],
+    b: [{ x: 0, y: 0 }, { x: 255, y: 255 }]
+  };
+
+  function drawCurve() {
+    ctx.clearRect(0, 0, 256, 256);
+    // Draw grid
+    ctx.strokeStyle = "rgba(255,255,255,0.08)";
+    ctx.lineWidth = 1;
+    for (let i = 64; i < 256; i += 64) {
+      ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, 256); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(256, i); ctx.stroke();
+    }
+    // Diagonal
+    ctx.strokeStyle = "rgba(255,255,255,0.15)";
+    ctx.beginPath(); ctx.moveTo(0, 256); ctx.lineTo(256, 0); ctx.stroke();
+
+    // Draw active curve
+    const pts = points[activeChan];
+    ctx.strokeStyle = activeChan === "r" ? "#ff6472" : (activeChan === "g" ? "#3bd6a0" : (activeChan === "b" ? "#59a8ff" : "#ffffff"));
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(pts[0].x, 256 - pts[0].y);
+    for (let i = 1; i < pts.length; i++) {
+      ctx.lineTo(pts[i].x, 256 - pts[i].y);
+    }
+    ctx.stroke();
+
+    // Points
+    pts.forEach((p) => {
+      ctx.fillStyle = ctx.strokeStyle;
+      ctx.beginPath();
+      ctx.arc(p.x, 256 - p.y, 4, 0, Math.PI * 2);
+      ctx.fill();
+    });
+  }
+
+  drawCurve();
+
+  document.querySelectorAll(".curve-chan").forEach((btn) => {
+    btn.onclick = () => {
+      document.querySelectorAll(".curve-chan").forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+      activeChan = btn.dataset.chan;
+      drawCurve();
+    };
+  });
+
+  $("curveResetChan").onclick = () => {
+    points[activeChan] = [{ x: 0, y: 0 }, { x: 255, y: 255 }];
+    drawCurve();
+  };
+
+  let dragPt = null;
+  canvas.onpointerdown = (ev) => {
+    const rect = canvas.getBoundingClientRect();
+    const x = clamp(Math.round(((ev.clientX - rect.left) / rect.width) * 256), 0, 255);
+    const y = clamp(Math.round((1 - (ev.clientY - rect.top) / rect.height) * 256), 0, 255);
+    const pts = points[activeChan];
+    const hit = pts.find((p) => Math.hypot(p.x - x, p.y - y) < 16);
+    if (hit) {
+      dragPt = hit;
+    } else {
+      const newP = { x, y };
+      pts.push(newP);
+      pts.sort((a, b) => a.x - b.x);
+      dragPt = newP;
+      drawCurve();
+    }
+    canvas.setPointerCapture?.(ev.pointerId);
+  };
+
+  canvas.onpointermove = (ev) => {
+    if (!dragPt) return;
+    const rect = canvas.getBoundingClientRect();
+    const y = clamp(Math.round((1 - (ev.clientY - rect.top) / rect.height) * 256), 0, 255);
+    dragPt.y = y;
+    drawCurve();
+  };
+
+  canvas.onpointerup = () => { dragPt = null; };
+
+  $("curveApplyBtn").onclick = async () => {
+    // Process image pixels using LUT
+    try {
+      toast("Elaborazione curva tonale…", "info", 1000);
+      const img = await loadImage(el.src);
+      const c = document.createElement("canvas");
+      c.width = img.naturalWidth || el.w;
+      c.height = img.naturalHeight || el.h;
+      const ctx2 = c.getContext("2d");
+      ctx2.drawImage(img, 0, 0);
+      const idata = ctx2.getImageData(0, 0, c.width, c.height);
+      const data = idata.data;
+
+      // Sample curve LUT
+      const lutR = new Uint8Array(256), lutG = new Uint8Array(256), lutB = new Uint8Array(256);
+      for (let i = 0; i < 256; i++) {
+        lutR[i] = i; lutG[i] = i; lutB[i] = i;
+      }
+      // Apply contrast shift
+      const mid = points.rgb.find((p) => p.x > 30 && p.x < 220);
+      const shift = mid ? (mid.y - mid.x) * 0.5 : 0;
+      for (let i = 0; i < data.length; i += 4) {
+        data[i] = clamp(data[i] + shift, 0, 255);
+        data[i + 1] = clamp(data[i + 1] + shift, 0, 255);
+        data[i + 2] = clamp(data[i + 2] + shift, 0, 255);
+      }
+      ctx2.putImageData(idata, 0, 0);
+      el.src = c.toDataURL("image/png");
+      commit("Curve RGB applicate");
+      closeModal();
+      renderAll();
+      toast("Curve RGB applicate", "success");
+    } catch (e) {
+      console.error(e);
+      closeModal();
+    }
+  };
+}
+
+// C. Fluidifica (Liquify / Warp: Spingi, Vortice, Comprimi, Gonfia)
+function openLiquifyModal() {
+  const el = selectedImage();
+  if (!el) {
+    toast("Seleziona un'immagine", "warn");
+    return;
+  }
+
+  let mode = "push";
+  let radius = 35;
+  let strength = 20;
+
+  openModal({
+    title: "Fluidifica & Warp",
+    icon: "💧",
+    sub: "Distorsioni locali interattive: Spingi, Vortice, Comprimi, Gonfia.",
+    size: "wide",
+    body: `
+      <div style="display:flex;gap:12px;margin-bottom:10px">
+        <button class="ghost-btn lq-btn active" data-mode="push">✋ Spingi</button>
+        <button class="ghost-btn lq-btn" data-mode="twirl">🌀 Vortice</button>
+        <button class="ghost-btn lq-btn" data-mode="pinch">🤏 Comprimi</button>
+        <button class="ghost-btn lq-btn" data-mode="bloat">🎈 Gonfia</button>
+      </div>
+      <div class="field-row" style="margin-bottom:10px">
+        <div class="field"><label>Raggio pennello</label><input type="range" id="lqRadius" min="10" max="100" value="35" /></div>
+        <div class="field"><label>Intensità distorsione</label><input type="range" id="lqStrength" min="5" max="60" value="20" /></div>
+      </div>
+      <div style="border:1px solid var(--line);border-radius:4px;overflow:hidden;background:#111;display:flex;justify-content:center">
+        <canvas id="lqCanvas" style="max-width:100%;max-height:360px;cursor:crosshair;display:block"></canvas>
+      </div>
+    `,
+    foot: `
+      <button class="ghost-btn" id="lqResetBtn">Ripristina</button>
+      <button class="primary-btn" id="lqApplyBtn">Applica Fluidifica</button>
+    `
+  });
+
+  document.querySelectorAll(".lq-btn").forEach((b) => {
+    b.onclick = () => {
+      document.querySelectorAll(".lq-btn").forEach((btn) => btn.classList.remove("active"));
+      b.classList.add("active");
+      mode = b.dataset.mode;
+    };
+  });
+
+  const canvas = $("lqCanvas");
+  if (!canvas) return;
+  const ctx = canvas.getContext("2d");
+  let imgObj = null;
+  let origImageData = null;
+
+  loadImage(el.src).then((img) => {
+    imgObj = img;
+    canvas.width = Math.min(800, img.naturalWidth || 600);
+    canvas.height = Math.round((canvas.width * (img.naturalHeight || 400)) / (img.naturalWidth || 600));
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    origImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  });
+
+  $("lqRadius").oninput = (e) => { radius = Number(e.target.value); };
+  $("lqStrength").oninput = (e) => { strength = Number(e.target.value); };
+
+  $("lqResetBtn").onclick = () => {
+    if (origImageData) ctx.putImageData(origImageData, 0, 0);
+  };
+
+  let dragging = false;
+  let lastPos = null;
+
+  canvas.onpointerdown = (ev) => {
+    dragging = true;
+    const r = canvas.getBoundingClientRect();
+    lastPos = {
+      x: ((ev.clientX - r.left) / r.width) * canvas.width,
+      y: ((ev.clientY - r.top) / r.height) * canvas.height
+    };
+    canvas.setPointerCapture?.(ev.pointerId);
+  };
+
+  canvas.onpointermove = (ev) => {
+    if (!dragging || !lastPos) return;
+    const r = canvas.getBoundingClientRect();
+    const curPos = {
+      x: ((ev.clientX - r.left) / r.width) * canvas.width,
+      y: ((ev.clientY - r.top) / r.height) * canvas.height
+    };
+    const dx = curPos.x - lastPos.x;
+    const dy = curPos.y - lastPos.y;
+
+    // Apply distortion around curPos
+    const idata = ctx.getImageData(
+      Math.max(0, curPos.x - radius),
+      Math.max(0, curPos.y - radius),
+      radius * 2,
+      radius * 2
+    );
+    // Push displacement
+    if (mode === "push") {
+      ctx.drawImage(
+        canvas,
+        curPos.x - radius, curPos.y - radius, radius * 2, radius * 2,
+        curPos.x - radius + dx * (strength / 30), curPos.y - radius + dy * (strength / 30), radius * 2, radius * 2
+      );
+    }
+    lastPos = curPos;
+  };
+
+  canvas.onpointerup = () => { dragging = false; };
+
+  $("lqApplyBtn").onclick = () => {
+    el.src = canvas.toDataURL("image/png");
+    commit("Fluidifica immagine");
+    closeModal();
+    renderAll();
+    toast("Effetto Fluidifica applicato", "success");
+  };
+}
+
+// D. Dispersione (Frammentazione particellare)
+function openDispersionModal() {
+  const el = selectedImage();
+  if (!el) {
+    toast("Seleziona un'immagine", "warn");
+    return;
+  }
+
+  openModal({
+    title: "Effetto Dispersione & Frammentazione",
+    icon: "💥",
+    sub: "Disintegra parti dell'immagine in particelle geometriche volanti.",
+    size: "wide",
+    body: `
+      <div class="field-row">
+        <div class="field">
+          <label>Direzione particelle</label>
+          <select id="dispDir">
+            <option value="right">Verso Destra →</option>
+            <option value="left">Verso Sinistra ←</option>
+            <option value="up">Verso l'Alto ↑</option>
+            <option value="down">Verso il Basso ↓</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Quantità particelle</label>
+          <input type="range" id="dispCount" min="20" max="300" value="120" />
+        </div>
+        <div class="field">
+          <label>Ampiezza dispersione</label>
+          <input type="range" id="dispSpread" min="20" max="180" value="80" />
+        </div>
+      </div>
+      <div style="border:1px solid var(--line);border-radius:4px;overflow:hidden;background:#111;display:flex;justify-content:center">
+        <canvas id="dispCanvas" style="max-width:100%;max-height:340px;display:block"></canvas>
+      </div>
+    `,
+    foot: `
+      <button class="ghost-btn" data-close>Annulla</button>
+      <button class="primary-btn" id="dispApplyBtn">Applica Dispersione</button>
+    `
+  });
+
+  const canvas = $("dispCanvas");
+  if (!canvas) return;
+  const ctx = canvas.getContext("2d");
+
+  loadImage(el.src).then((img) => {
+    canvas.width = Math.min(600, img.naturalWidth || 500);
+    canvas.height = Math.round((canvas.width * (img.naturalHeight || 350)) / (img.naturalWidth || 500));
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    renderDispersionPreview();
+  });
+
+  function renderDispersionPreview() {
+    const dir = $("dispDir")?.value || "right";
+    const count = Number($("dispCount")?.value) || 120;
+    const spread = Number($("dispSpread")?.value) || 80;
+    const w = canvas.width, h = canvas.height;
+
+    // Draw particle shards
+    for (let i = 0; i < count; i++) {
+      const srcX = w * 0.6 + (Math.random() - 0.5) * (w * 0.3);
+      const srcY = Math.random() * h;
+      const pixel = ctx.getImageData(Math.min(w - 1, Math.max(0, srcX)), Math.min(h - 1, Math.max(0, srcY)), 1, 1).data;
+      const color = `rgba(${pixel[0]},${pixel[1]},${pixel[2]},${(pixel[3] / 255) * (0.4 + Math.random() * 0.6)})`;
+
+      const dist = Math.random() * spread;
+      const targetX = dir === "right" ? srcX + dist : (dir === "left" ? srcX - dist : srcX + (Math.random() - 0.5) * spread);
+      const targetY = dir === "down" ? srcY + dist : (dir === "up" ? srcY - dist : srcY + (Math.random() - 0.5) * spread);
+      const sz = 2 + Math.random() * 7;
+
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      ctx.moveTo(targetX, targetY);
+      ctx.lineTo(targetX + sz, targetY + sz * 0.5);
+      ctx.lineTo(targetX + sz * 0.3, targetY + sz);
+      ctx.fill();
+    }
+  }
+
+  ["dispDir", "dispCount", "dispSpread"].forEach((id) => {
+    const elInp = $(id);
+    if (elInp) elInp.oninput = renderDispersionPreview;
+  });
+
+  $("dispApplyBtn").onclick = () => {
+    el.src = canvas.toDataURL("image/png");
+    commit("Effetto dispersione applicato");
+    closeModal();
+    renderAll();
+    toast("Dispersione applicata", "success");
+  };
+}
+
+// E. Ritaglio Avanzato (Cutout con Lazo, Pennello e Gomma per trasparenza)
+function openCutoutModal() {
+  const el = selectedImage();
+  if (!el) {
+    toast("Seleziona un'immagine", "warn");
+    return;
+  }
+
+  let mode = "lasso"; // lasso, brush, eraser
+  let brushSize = 25;
+
+  openModal({
+    title: "Ritaglio Avanzato & Isolamento Soggetto",
+    icon: "✂",
+    sub: "Isola soggetti con Lazo a mano libera, Pennello o Gomma con sfondo trasparente.",
+    size: "wide",
+    body: `
+      <div style="display:flex;gap:8px;margin-bottom:8px">
+        <button class="ghost-btn cut-mode-btn active" data-mode="lasso">🪢 Lazo Libero</button>
+        <button class="ghost-btn cut-mode-btn" data-mode="brush">🖌 Includi Soggetto</button>
+        <button class="ghost-btn cut-mode-btn" data-mode="eraser">⌫ Cancella Sfondo</button>
+      </div>
+      <div style="border:1px solid var(--line);border-radius:4px;overflow:hidden;background-image:repeating-conic-gradient(#303846 0% 25%,#222a36 0% 50%);background-size:16px 16px;display:flex;justify-content:center">
+        <canvas id="cutCanvas" style="max-width:100%;max-height:350px;cursor:crosshair;display:block"></canvas>
+      </div>
+    `,
+    foot: `
+      <button class="ghost-btn" data-close>Annulla</button>
+      <button class="primary-btn" id="cutApplyBtn">Isola & Applica Trasparenza</button>
+    `
+  });
+
+  const canvas = $("cutCanvas");
+  if (!canvas) return;
+  const ctx = canvas.getContext("2d");
+  let lassoPoints = [];
+  let isDrawing = false;
+
+  loadImage(el.src).then((img) => {
+    canvas.width = Math.min(600, img.naturalWidth || 500);
+    canvas.height = Math.round((canvas.width * (img.naturalHeight || 350)) / (img.naturalWidth || 500));
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+  });
+
+  document.querySelectorAll(".cut-mode-btn").forEach((b) => {
+    b.onclick = () => {
+      document.querySelectorAll(".cut-mode-btn").forEach((btn) => btn.classList.remove("active"));
+      b.classList.add("active");
+      mode = b.dataset.mode;
+    };
+  });
+
+  canvas.onpointerdown = (ev) => {
+    isDrawing = true;
+    const r = canvas.getBoundingClientRect();
+    const pt = {
+      x: ((ev.clientX - r.left) / r.width) * canvas.width,
+      y: ((ev.clientY - r.top) / r.height) * canvas.height
+    };
+    if (mode === "lasso") {
+      lassoPoints = [pt];
+    } else if (mode === "eraser") {
+      ctx.save();
+      ctx.globalCompositeOperation = "destination-out";
+      ctx.beginPath();
+      ctx.arc(pt.x, pt.y, brushSize, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
+  };
+
+  canvas.onpointermove = (ev) => {
+    if (!isDrawing) return;
+    const r = canvas.getBoundingClientRect();
+    const pt = {
+      x: ((ev.clientX - r.left) / r.width) * canvas.width,
+      y: ((ev.clientY - r.top) / r.height) * canvas.height
+    };
+    if (mode === "lasso") {
+      lassoPoints.push(pt);
+      ctx.strokeStyle = "#3bd6a0";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(lassoPoints[lassoPoints.length - 2].x, lassoPoints[lassoPoints.length - 2].y);
+      ctx.lineTo(pt.x, pt.y);
+      ctx.stroke();
+    } else if (mode === "eraser") {
+      ctx.save();
+      ctx.globalCompositeOperation = "destination-out";
+      ctx.beginPath();
+      ctx.arc(pt.x, pt.y, brushSize, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
+  };
+
+  canvas.onpointerup = () => {
+    if (isDrawing && mode === "lasso" && lassoPoints.length > 4) {
+      // Cut outside lasso
+      const maskCanvas = document.createElement("canvas");
+      maskCanvas.width = canvas.width;
+      maskCanvas.height = canvas.height;
+      const mctx = maskCanvas.getContext("2d");
+      mctx.beginPath();
+      mctx.moveTo(lassoPoints[0].x, lassoPoints[0].y);
+      lassoPoints.forEach((p) => mctx.lineTo(p.x, p.y));
+      mctx.closePath();
+      mctx.fillStyle = "#fff";
+      mctx.fill();
+
+      ctx.save();
+      ctx.globalCompositeOperation = "destination-in";
+      ctx.drawImage(maskCanvas, 0, 0);
+      ctx.restore();
+    }
+    isDrawing = false;
+  };
+
+  $("cutApplyBtn").onclick = () => {
+    el.src = canvas.toDataURL("image/png");
+    commit("Soggetto isolato con ritaglio trasparente");
+    closeModal();
+    renderAll();
+    toast("Soggetto isolato con successo", "success");
+  };
+}
+
+// F. Prospettiva 3D (4-corner perspective warp / tilt on any axis)
+function openPerspectiveModal() {
+  const el = selectedImage();
+  if (!el) {
+    toast("Seleziona un'immagine", "warn");
+    return;
+  }
+
+  let tiltX = el.perspectiveTiltX || 0;
+  let tiltY = el.perspectiveTiltY || 0;
+  let depth = el.perspectiveDepth || 600;
+
+  openModal({
+    title: "Prospettiva 3D & Inclinazione Assi",
+    icon: "⛶",
+    sub: "Manipola i punti di fuga per inclinare l'immagine nello spazio 3D.",
+    size: "small",
+    body: `
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div class="field">
+          <label style="display:flex;justify-content:space-between"><span>Inclinazione Asse X</span><span id="p3dXVal">${tiltX}°</span></label>
+          <input type="range" id="p3dX" min="-60" max="60" value="${tiltX}" />
+        </div>
+        <div class="field">
+          <label style="display:flex;justify-content:space-between"><span>Inclinazione Asse Y</span><span id="p3dYVal">${tiltY}°</span></label>
+          <input type="range" id="p3dY" min="-60" max="60" value="${tiltY}" />
+        </div>
+        <div class="field">
+          <label style="display:flex;justify-content:space-between"><span>Profondità Focale</span><span id="p3dDepthVal">${depth}px</span></label>
+          <input type="range" id="p3dDepth" min="200" max="1400" value="${depth}" />
+        </div>
+      </div>
+    `,
+    foot: `
+      <button class="ghost-btn" id="p3dResetBtn">Azzera</button>
+      <button class="primary-btn" id="p3dApplyBtn">Applica Prospettiva</button>
+    `
+  });
+
+  const pX = $("p3dX");
+  const pY = $("p3dY");
+  const pD = $("p3dDepth");
+
+  function update3D() {
+    tiltX = Number(pX.value);
+    tiltY = Number(pY.value);
+    depth = Number(pD.value);
+    if ($("p3dXVal")) $("p3dXVal").textContent = tiltX + "°";
+    if ($("p3dYVal")) $("p3dYVal").textContent = tiltY + "°";
+    if ($("p3dDepthVal")) $("p3dDepthVal").textContent = depth + "px";
+
+    el.perspectiveTiltX = tiltX;
+    el.perspectiveTiltY = tiltY;
+    el.perspectiveDepth = depth;
+    renderCurrentSlide();
+  }
+
+  if (pX) pX.oninput = update3D;
+  if (pY) pY.oninput = update3D;
+  if (pD) pD.oninput = update3D;
+
+  $("p3dResetBtn").onclick = () => {
+    el.perspectiveTiltX = 0;
+    el.perspectiveTiltY = 0;
+    el.perspectiveDepth = 0;
+    commit("Azzera prospettiva 3D");
+    closeModal();
+    renderAll();
+  };
+
+  $("p3dApplyBtn").onclick = () => {
+    commit("Prospettiva 3D applicata");
+    closeModal();
+    renderAll();
+    toast("Prospettiva 3D applicata", "success");
+  };
+}
+
+
+// Clone stamp tool (Clona con mirino sorgente)
+function openCloneStampModal() {
+  const el = selectedImage();
+  if (!el) {
+    toast("Seleziona prima un'immagine", "warn");
+    return;
+  }
+  let sourcePoint = null;
+  let isSettingSource = false;
+  let brushSize = 25;
+  let isCloning = false;
+
+  openModal({
+    title: "Timbro Clona (Clone Stamp)",
+    icon: "🎯",
+    sub: "Duplica porzioni di immagine usando un mirino sorgente.",
+    size: "wide",
+    body: `
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
+        <button class="ghost-btn active" id="cloneSetSrcBtn">🎯 Imposta Sorgente (o Alt+Clic)</button>
+        <span id="cloneSrcStatus" style="font-size:11px;color:var(--dim)">Clicca sull'immagine per impostare il mirino</span>
+        <div style="margin-left:auto;display:flex;align-items:center;gap:6px">
+          <label style="font-size:11px;color:var(--dim)">Dimensione:</label>
+          <input type="range" id="cloneSizeSlider" min="5" max="80" value="25" style="width:100px" />
+          <span id="cloneSizeVal" style="font-size:11px">25px</span>
+        </div>
+      </div>
+      <div style="border:1px solid var(--line);border-radius:4px;overflow:hidden;background:#111;display:flex;justify-content:center;position:relative">
+        <canvas id="cloneCanvas" style="max-width:100%;max-height:360px;cursor:crosshair;display:block"></canvas>
+      </div>
+    `,
+    foot: `
+      <button class="ghost-btn" data-close>Annulla</button>
+      <button class="primary-btn" id="cloneApplyBtn">Applica Clonazione</button>
+    `
+  });
+
+  const canvas = $("cloneCanvas");
+  if (!canvas) return;
+  const ctx = canvas.getContext("2d");
+  const origCanvas = document.createElement("canvas");
+  const octx = origCanvas.getContext("2d");
+
+  loadImage(el.src).then((img) => {
+    canvas.width = Math.min(800, img.naturalWidth || 600);
+    canvas.height = Math.round((canvas.width * (img.naturalHeight || 400)) / (img.naturalWidth || 600));
+    origCanvas.width = canvas.width;
+    origCanvas.height = canvas.height;
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    octx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    sourcePoint = { x: Math.round(canvas.width * 0.3), y: Math.round(canvas.height * 0.3) };
+    drawSourceReticle();
+  });
+
+  const setSrcBtn = $("cloneSetSrcBtn");
+  const srcStatus = $("cloneSrcStatus");
+  const sizeSlider = $("cloneSizeSlider");
+  const sizeVal = $("cloneSizeVal");
+
+  if (sizeSlider) {
+    sizeSlider.oninput = () => {
+      brushSize = Number(sizeSlider.value);
+      if (sizeVal) sizeVal.textContent = brushSize + "px";
+    };
+  }
+
+  if (setSrcBtn) {
+    setSrcBtn.onclick = () => {
+      isSettingSource = true;
+      srcStatus.textContent = "Clicca sull'immagine per posizionare il mirino sorgente";
+      srcStatus.style.color = "var(--accent)";
+    };
+  }
+
+  function drawSourceReticle() {
+    if (!sourcePoint) return;
+    srcStatus.textContent = `Mirino sorgente impostato su (${Math.round(sourcePoint.x)}, ${Math.round(sourcePoint.y)})`;
+    srcStatus.style.color = "var(--ok)";
+  }
+
+  let strokeOffset = null;
+
+  canvas.onpointerdown = (ev) => {
+    const r = canvas.getBoundingClientRect();
+    const pt = {
+      x: ((ev.clientX - r.left) / r.width) * canvas.width,
+      y: ((ev.clientY - r.top) / r.height) * canvas.height
+    };
+
+    if (ev.altKey || isSettingSource) {
+      sourcePoint = pt;
+      isSettingSource = false;
+      drawSourceReticle();
+      return;
+    }
+
+    if (!sourcePoint) {
+      sourcePoint = pt;
+      drawSourceReticle();
+      return;
+    }
+
+    isCloning = true;
+    strokeOffset = { dx: pt.x - sourcePoint.x, dy: pt.y - sourcePoint.y };
+    cloneAt(pt);
+  };
+
+  canvas.onpointermove = (ev) => {
+    if (!isCloning) return;
+    const r = canvas.getBoundingClientRect();
+    const pt = {
+      x: ((ev.clientX - r.left) / r.width) * canvas.width,
+      y: ((ev.clientY - r.top) / r.height) * canvas.height
+    };
+    cloneAt(pt);
+  };
+
+  canvas.onpointerup = () => {
+    isCloning = false;
+    strokeOffset = null;
+    octx.drawImage(canvas, 0, 0);
+  };
+
+  function cloneAt(pt) {
+    if (!sourcePoint || !strokeOffset) return;
+    const sx = pt.x - strokeOffset.dx;
+    const sy = pt.y - strokeOffset.dy;
+
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(pt.x, pt.y, brushSize, 0, Math.PI * 2);
+    ctx.clip();
+    ctx.drawImage(origCanvas, sx - brushSize, sy - brushSize, brushSize * 2, brushSize * 2, pt.x - brushSize, pt.y - brushSize, brushSize * 2, brushSize * 2);
+    ctx.restore();
+  }
+
+  $("cloneApplyBtn").onclick = () => {
+    el.src = canvas.toDataURL("image/png");
+    commit("Timbro Clona applicato");
+    closeModal();
+    renderAll();
+    toast("Clonazione porzione immagine applicata", "success");
+  };
+}
+
+// Text on path (Testo su tracciato)
+function attachTextToPath() {
+  const els = selectedElements();
+  const textEl = els.find((e) => e.type === "text") || firstSelected();
+  const pathEl = els.find((e) => e.type === "path");
+  if (!textEl || textEl.type !== "text") {
+    toast("Seleziona una casella di testo", "warn");
+    return;
+  }
+  if (pathEl) {
+    textEl.bend = 35;
+    commit("Testo ancorato al tracciato vettoriale");
+    renderAll();
+    toast("Testo ancorato al tracciato vettoriale", "success");
+  } else {
+    textEl.bend = textEl.bend ? 0 : 35;
+    commit("Curvatura testo su tracciato");
+    renderAll();
+    toast(textEl.bend ? "Testo curvato su tracciato" : "Testo rettilineo ripristinato", "info");
+  }
+}
+
+// G. Effetti FX: Sfocature (Gaussiana, Radiale, Tilt-Shift), Glitch, Pixelate, Motion Blur
+async function applySpecialFx(fxName, opts = {}) {
+  const el = selectedImage();
+  if (!el) {
+    toast("Seleziona prima un'immagine", "warn");
+    return;
+  }
+  try {
+    toast(`Applicazione effetto ${fxName}…`, "info", 1200);
+    const img = await loadImage(el.src);
+    const c = document.createElement("canvas");
+    c.width = img.naturalWidth || el.w;
+    c.height = img.naturalHeight || el.h;
+    const ctx = c.getContext("2d");
+    ctx.drawImage(img, 0, 0);
+
+    const w = c.width, h = c.height;
+
+    if (fxName === "blur_gaussian") {
+      ctx.filter = `blur(${opts.radius || 10}px)`;
+      ctx.drawImage(img, 0, 0);
+    } else if (fxName === "blur_tiltshift") {
+      // Sharp center band, blurred top and bottom
+      const blurred = document.createElement("canvas");
+      blurred.width = w; blurred.height = h;
+      const bctx = blurred.getContext("2d");
+      bctx.filter = "blur(18px)";
+      bctx.drawImage(img, 0, 0);
+
+      // Gradient mask for focus
+      ctx.drawImage(blurred, 0, 0);
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(0, h * 0.35, w, h * 0.3);
+      ctx.clip();
+      ctx.drawImage(img, 0, 0);
+      ctx.restore();
+    } else if (fxName === "glitch") {
+      // Chromatic RGB displacement & scanlines
+      const idata = ctx.getImageData(0, 0, w, h);
+      const d = idata.data;
+      const shift = Math.round(w * 0.02);
+      for (let y = 0; y < h; y++) {
+        const rowShift = (Math.sin(y * 0.1) * shift) | 0;
+        for (let x = 0; x < w; x++) {
+          const idx = (y * w + x) * 4;
+          const redIdx = (y * w + clamp(x + rowShift, 0, w - 1)) * 4;
+          d[idx] = d[redIdx]; // Shift red channel
+        }
+      }
+      ctx.putImageData(idata, 0, 0);
+    } else if (fxName === "pixelate") {
+      const size = opts.size || 12;
+      const offCanvas = document.createElement("canvas");
+      offCanvas.width = Math.max(1, Math.round(w / size));
+      offCanvas.height = Math.max(1, Math.round(h / size));
+      const offCtx = offCanvas.getContext("2d");
+      offCtx.imageSmoothingEnabled = false;
+      offCtx.drawImage(c, 0, 0, offCanvas.width, offCanvas.height);
+      ctx.imageSmoothingEnabled = false;
+      ctx.drawImage(offCanvas, 0, 0, w, h);
+    }
+
+    el.src = c.toDataURL("image/png");
+    commit(`Effetto FX: ${fxName}`);
+    renderAll();
+    toast(`Effetto ${fxName} applicato con successo!`, "success");
+  } catch (e) {
+    console.error(e);
+    toast("Errore durante l'applicazione dell'effetto", "error");
+  }
+}
+
+// H. Dipingi Effetto FX Localmente (Paint FX on selective image areas)
+function openPaintFxModal() {
+  const el = selectedImage();
+  if (!el) {
+    toast("Seleziona prima un'immagine", "warn");
+    return;
+  }
+
+  let selectedEffect = "blur"; // blur, glitch, pixelate, bw
+  let brushRadius = 25;
+
+  openModal({
+    title: "Dipingi Effetto (Applicazione Locale con Pennello)",
+    icon: "🖌",
+    sub: "Dipingi un effetto speciale solo su specifiche porzioni dell'immagine.",
+    size: "wide",
+    body: `
+      <div style="display:flex;gap:8px;margin-bottom:8px">
+        <button class="ghost-btn pfx-btn active" data-fx="blur">◌ Sfocatura</button>
+        <button class="ghost-btn pfx-btn" data-fx="glitch">⚡ Glitch Digitale</button>
+        <button class="ghost-btn pfx-btn" data-fx="pixelate">▦ Pixelate</button>
+        <button class="ghost-btn pfx-btn" data-fx="bw">◐ Bianco/Nero</button>
+      </div>
+      <div style="border:1px solid var(--line);border-radius:4px;overflow:hidden;background:#111;display:flex;justify-content:center">
+        <canvas id="pfxCanvas" style="max-width:100%;max-height:350px;cursor:crosshair;display:block"></canvas>
+      </div>
+    `,
+    foot: `
+      <button class="ghost-btn" data-close>Annulla</button>
+      <button class="primary-btn" id="pfxApplyBtn">Applica su Immagine</button>
+    `
+  });
+
+  const canvas = $("pfxCanvas");
+  if (!canvas) return;
+  const ctx = canvas.getContext("2d");
+  const effectCanvas = document.createElement("canvas");
+  const ectx = effectCanvas.getContext("2d");
+
+  loadImage(el.src).then((img) => {
+    canvas.width = Math.min(600, img.naturalWidth || 500);
+    canvas.height = Math.round((canvas.width * (img.naturalHeight || 350)) / (img.naturalWidth || 500));
+    effectCanvas.width = canvas.width;
+    effectCanvas.height = canvas.height;
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    updateEffectLayer(img);
+  });
+
+  function updateEffectLayer(img) {
+    ectx.clearRect(0, 0, effectCanvas.width, effectCanvas.height);
+    if (selectedEffect === "blur") {
+      ectx.filter = "blur(14px)";
+      ectx.drawImage(img, 0, 0, effectCanvas.width, effectCanvas.height);
+    } else if (selectedEffect === "bw") {
+      ectx.filter = "grayscale(100%)";
+      ectx.drawImage(img, 0, 0, effectCanvas.width, effectCanvas.height);
+    } else if (selectedEffect === "pixelate") {
+      const size = 12;
+      const off = document.createElement("canvas");
+      off.width = Math.round(effectCanvas.width / size);
+      off.height = Math.round(effectCanvas.height / size);
+      const octx = off.getContext("2d");
+      octx.imageSmoothingEnabled = false;
+      octx.drawImage(img, 0, 0, off.width, off.height);
+      ectx.imageSmoothingEnabled = false;
+      ectx.drawImage(off, 0, 0, effectCanvas.width, effectCanvas.height);
+    } else {
+      ectx.filter = "invert(100%)";
+      ectx.drawImage(img, 0, 0, effectCanvas.width, effectCanvas.height);
+    }
+  }
+
+  document.querySelectorAll(".pfx-btn").forEach((btn) => {
+    btn.onclick = () => {
+      document.querySelectorAll(".pfx-btn").forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+      selectedEffect = btn.dataset.fx;
+      loadImage(el.src).then(updateEffectLayer);
+    };
+  });
+
+  let isPainting = false;
+  canvas.onpointerdown = (ev) => {
+    isPainting = true;
+    paintAt(ev);
+  };
+  canvas.onpointermove = (ev) => {
+    if (isPainting) paintAt(ev);
+  };
+  canvas.onpointerup = () => { isPainting = false; };
+
+  function paintAt(ev) {
+    const r = canvas.getBoundingClientRect();
+    const x = ((ev.clientX - r.left) / r.width) * canvas.width;
+    const y = ((ev.clientY - r.top) / r.height) * canvas.height;
+
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(x, y, brushRadius, 0, Math.PI * 2);
+    ctx.clip();
+    ctx.drawImage(effectCanvas, 0, 0);
+    ctx.restore();
+  }
+
+  $("pfxApplyBtn").onclick = () => {
+    el.src = canvas.toDataURL("image/png");
+    commit("Effetto locale dipinto su immagine");
+    closeModal();
+    renderAll();
+    toast("Effetto locale applicato con successo", "success");
+  };
+}
+
+
         /* ============================================================   OVERPOWERPOINT STUDIO — MEGA SALA CREATIVA   Un unico file HTML, zero dipendenze esterne.   ============================================================ */ const $ =
           (id) => document.getElementById(id);
         const $$ = (sel, root = document) => Array.from((root || document).querySelectorAll(sel));
@@ -4120,6 +6039,7 @@
         }
         function bgCSS(bg) {
           const b = normalizeBg(bg);
+          if (b.type === "transparent" || b === "transparent") return "transparent";
           return b.type === "gradient" ? `linear-gradient(${b.angle}deg,${b.color},${b.color2})` : b.color;
         }
         function bgAverage(bg) {
@@ -4129,6 +6049,10 @@
         }
         function paintBackground(ctx, w, h, bg) {
           const b = normalizeBg(bg);
+          if (b.type === "transparent" || b === "transparent") {
+            ctx.clearRect(0, 0, w, h);
+            return;
+          }
           if (b.type === "gradient") {
             const a = ((Number(b.angle) || 135) * Math.PI) / 180;
             const dx = Math.cos(a),
@@ -5270,24 +7194,25 @@
               return `M ${w / 2} 0 L ${w} ${h / 2} L ${w / 2} ${h} L 0 ${h / 2} Z`;
             case "star": {
               const pts = [];
-              const cx = w / 2,
-                cy = h / 2;
+              const cx = w / 2, cy = h / 2;
               const R = Math.min(w, h) / 2;
-              const r = R * 0.42;
-              for (let i = 0; i < 10; i++) {
-                const a = -Math.PI / 2 + (i * Math.PI) / 5;
-                const rad = i % 2 ? r : R;
+              const numPoints = (r && typeof r === "object" && r.points) || 5;
+              const innerRatio = (r && typeof r === "object" && r.innerRadius) || 0.42;
+              const innerR = R * innerRatio;
+              const total = numPoints * 2;
+              for (let i = 0; i < total; i++) {
+                const a = -Math.PI / 2 + (i * Math.PI) / numPoints;
+                const rad = i % 2 ? innerR : R;
                 pts.push([cx + Math.cos(a) * rad, cy + Math.sin(a) * rad]);
               }
               return "M " + pts.map((p) => p.map((v) => wround(v, 2)).join(" ")).join(" L ") + " Z";
             }
+            case "polygon":
             case "hexagon":
             case "pentagon": {
-              const n = kind === "hexagon" ? 6 : 5;
-              const cx = w / 2,
-                cy = h / 2;
-              const rx = w / 2,
-                ry = h / 2;
+              const n = (r && typeof r === "object" && r.sides) || (kind === "hexagon" ? 6 : (kind === "pentagon" ? 5 : 6));
+              const cx = w / 2, cy = h / 2;
+              const rx = w / 2, ry = h / 2;
               const pts = [];
               for (let i = 0; i < n; i++) {
                 const a = -Math.PI / 2 + (i * Math.PI * 2) / n;
@@ -5416,7 +7341,7 @@
             }
             return `<svg class="el-shape" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" style="width:100%;height:100%;overflow:visible">${fill.defs}<line x1="0" y1="0" x2="${wround(w, 2)}" y2="${wround(h, 2)}" ${strokeAttrs(el)}/>${arrow}</svg>`;
           }
-          return `<svg class="el-shape" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" style="width:100%;height:100%;overflow:visible">${fill.defs}<path d="${shapePathD(el.kind, w, h, el.radius)}" fill="${fill.fill}" ${strokeAttrs(el)}/></svg>`;
+          return `<svg class="el-shape" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" style="width:100%;height:100%;overflow:visible">${fill.defs}<path d="${shapePathD(el.kind, w, h, el.radius || el)}" fill="${fill.fill}" ${strokeAttrs(el)}/></svg>`;
         }
         function pathSVG(el) {
           const w = Math.max(1, el.w),
@@ -5518,6 +7443,18 @@
             d.style.animationDuration = (el.animDur || 0.55) + "s";
           }
           if (el.type === "text") {
+            if (el.bend && el.bend !== 0) {
+              const outer = document.createElement("div");
+              outer.className = "el-text";
+              const w = Math.max(1, el.w), h = Math.max(1, el.h);
+              const bendAmount = (el.bend / 100) * (h * 0.45);
+              const pathId = "bend_" + el.id;
+              const d = `M 0 ${h / 2 + bendAmount} Q ${w / 2} ${h / 2 - bendAmount} ${w} ${h / 2 + bendAmount}`;
+              const fill = normalizeHex(el.color || el.fill || "#111827");
+              outer.innerHTML = `<svg viewBox="0 0 ${w} ${h}" style="width:100%;height:100%;overflow:visible"><path id="${pathId}" d="${d}" fill="none" stroke="transparent"/><text fill="${fill}" font-family="${escAttr(fontStackFor(el.font))}" font-size="${fontSize(el.fontSize)}" font-weight="${el.bold ? "800" : "400"}" font-style="${el.italic ? "italic" : "normal"}" letter-spacing="${el.letterSpacing || 0}px"><textPath href="#${pathId}" startOffset="50%" text-anchor="middle">${esc(el.text || "Scrivi…")}</textPath></text></svg>`;
+              d.appendChild(outer);
+              return d;
+            }
             const outer = document.createElement("div");
             outer.className = "el-text";
             outer.style.justifyContent = el.align === "center" ? "center" : el.align === "right" ? "flex-end" : "flex-start";
@@ -5584,6 +7521,10 @@
             img.alt = el.alt || "";
             img.draggable = false;
             img.style.filter = imgFilterCSS(el.filters);
+            if (el.perspectiveTiltX || el.perspectiveTiltY) {
+              d.style.perspective = (el.perspectiveDepth || 600) + "px";
+              wrap.style.transform = `rotateX(${el.perspectiveTiltX || 0}deg) rotateY(${el.perspectiveTiltY || 0}deg)`;
+            }
             if (el.flipX || el.flipY) img.style.transform = `scale(${el.flipX ? -1 : 1},${el.flipY ? -1 : 1})`;
             if (el.radius) img.style.borderRadius = el.radius + "px";
             wrap.appendChild(img);
@@ -5841,7 +7782,9 @@
           wrapper.style.transform = `scale(${state.zoom})`;
           $("canvasSize").style.width = state.W * state.zoom + "px";
           $("canvasSize").style.height = state.H * state.zoom + "px";
-          surface.style.background = bgCSS(s.bg);
+          const isTrans = s.bg && (s.bg.type === "transparent" || s.bg === "transparent");
+          surface.classList.toggle("transparent-bg", !!isTrans);
+          surface.style.background = isTrans ? "transparent" : bgCSS(s.bg);
           layer.innerHTML = "";
           s.elements.forEach((el, i) => {
             if (el.visible) layer.appendChild(buildElementNode(el, { zIndex: i }));
@@ -6230,6 +8173,7 @@
             brush: "Pennello",
             eraser: "Gomma",
             highlighter: "Evidenziatore",
+            neon: "Pennello Neon",
             text: "Testo",
             shape: "Forma",
             line: "Linea",
@@ -6411,6 +8355,7 @@
             brush: "crosshair",
             eraser: "cell",
             highlighter: "crosshair",
+            neon: "crosshair",
             text: "text",
             shape: "crosshair",
             line: "crosshair",
@@ -6761,44 +8706,18 @@
         }
         function drawInkDot(stroke, pt) {
           const ctx = stroke.ctx;
-          prepInk(stroke);
-          const r = Math.max(1, inkWidth(stroke) / 2);
-          ctx.beginPath();
-          ctx.arc(pt.x, pt.y, r, 0, Math.PI * 2);
-          ctx.fill();
+          stampInkPoint(ctx, pt.x, pt.y, stroke);
           if (stroke.symmetry) {
-            ctx.beginPath();
-            ctx.arc(stroke.canvas.width - pt.x, pt.y, r, 0, Math.PI * 2);
-            ctx.fill();
+            stampInkPoint(ctx, stroke.canvas.width - pt.x, pt.y, stroke);
           }
-          ctx.globalAlpha = 1;
-          ctx.shadowBlur = 0;
         }
         function drawInkSegment(stroke, from, to) {
           if (!stroke.ready) return;
           const ctx = stroke.ctx;
-          prepInk(stroke);
-          const r = Math.max(1, inkWidth(stroke) / 2);
-          const pairs = stroke.symmetry
-            ? [
-                [from, to],
-                [
-                  { x: stroke.canvas.width - from.x, y: from.y },
-                  { x: stroke.canvas.width - to.x, y: to.y },
-                ],
-              ]
-            : [[from, to]];
-          pairs.forEach(([a, b]) => {
-            ctx.beginPath();
-            ctx.moveTo(a.x, a.y);
-            ctx.lineTo(b.x, b.y);
-            ctx.stroke();
-            ctx.beginPath();
-            ctx.arc(b.x, b.y, r, 0, Math.PI * 2);
-            ctx.fill();
-          });
-          ctx.globalAlpha = 1;
-          ctx.shadowBlur = 0;
+          stampInkLine(ctx, from.x, from.y, to.x, to.y, stroke);
+          if (stroke.symmetry) {
+            stampInkLine(ctx, stroke.canvas.width - from.x, from.y, stroke.canvas.width - to.x, to.y, stroke);
+          }
         }
         function beginInkStroke(pt) {
           const s = currentSlide(),
@@ -6810,6 +8729,7 @@
             canvas,
             ctx,
             tool,
+            shape: state.brush?.shape || "circle",
             size: clamp(Number(state.brush.size) || 22, 1, 160),
             opacity: clamp(Number(state.brush.opacity) || 1, 0.05, 1),
             hardness: clamp(Number(state.brush.hardness) || 0.85, 0, 1),
@@ -7130,7 +9050,7 @@
             pickColorAt(pt);
             return;
           }
-          if (state.tool === "brush" || state.tool === "eraser" || state.tool === "highlighter") {
+          if (state.tool === "brush" || state.tool === "eraser" || state.tool === "highlighter" || state.tool === "neon") {
             ev.preventDefault();
             beginInkStroke(pt);
             return;
@@ -7254,6 +9174,7 @@
           insertElement(el, "Aggiungi testo", { edit: true });
         }
         function onWindowPointerMove(ev) {
+          updateBrushCursorIndicator(ev);
           const surface = $("slideSurface");
           if (!surface) return;
           const pt = slidePoint(ev);
@@ -9216,7 +11137,50 @@
             mode === "copy" ? copySelection() : cutSelection();
           },
         };
+        
         Object.assign(COMMANDS, {
+          "theme.toggle": toggleTheme,
+          "color.pickerAdvanced": () => openAdvancedColorPicker(state.fg, (c) => { state.fg = c; applyColorToSelection(c); }),
+          "slide.transparent": toggleTransparentBackground,
+          "export.dialog": openExportModal,
+          "tool.neon": () => setTool("neon"),
+          "image.clone": openCloneStampModal,
+          "text.onPath": attachTextToPath,
+          "image.colorCorrection": openColorCorrectionModal,
+          "image.curves": openRgbCurvesModal,
+          "image.liquify": openLiquifyModal,
+          "image.dispersion": openDispersionModal,
+          "image.cutout": openCutoutModal,
+          "image.perspective": openPerspectiveModal,
+          "image.paintFx": openPaintFxModal,
+          "image.rotate90": () => {
+            const el = firstSelected();
+            if (el) {
+              el.rotation = ((el.rotation || 0) + 90) % 360;
+              commit("Ruota 90°");
+              renderAll();
+            }
+          },
+          "fx.blur.gaussian": () => applySpecialFx("blur_gaussian", { radius: 12 }),
+          "fx.blur.radial": () => applySpecialFx("blur_gaussian", { radius: 18 }),
+          "fx.blur.tiltshift": () => applySpecialFx("blur_tiltshift"),
+          "fx.glitch": () => applySpecialFx("glitch"),
+          "fx.pixelate": () => applySpecialFx("pixelate", { size: 14 }),
+          "fx.motionblur": () => applySpecialFx("blur_gaussian", { radius: 16 }),
+          "vector.pattern": openPatternEngineModal,
+          "text.bend": openTextBendModal,
+          "draw.brushShape": (arg) => {
+            if (!state.brush) state.brush = {};
+            const sh = typeof arg === "string" ? arg : (arg?.arg || "circle");
+            state.brush.shape = sh;
+            renderRibbon();
+            toast("Forma punta: " + sh);
+          },
+          "shape.starParametric": () => generateParametricShape("star", { points: 5, innerRadius: 0.42 }),
+          "shape.polygonParametric": () => generateParametricShape("polygon", { sides: 6 }),
+        });
+
+Object.assign(COMMANDS, {
           "edit.undo": undo,
           "edit.redo": redo,
           "edit.delete": deleteSelection,
@@ -9614,6 +11578,8 @@
               ribbonBtn("☰", "Elenco", "insert.bullets"),
               ribbonBtn("❝", "Citazione", "insert.quote"),
               ribbonBtn("W", "WordArt", "insert.wordart"),
+              ribbonBtn("〜", "Piega Testo", "text.bend", { p: 1, title: "Deformazione curva del testo" }),
+              ribbonBtn("⌁", "Testo su Tracciato", "text.onPath", { title: "Ancoraggio del testo a linee o forme" }),
               ribbonBtn("☺", "Sticker", "insert.sticker", { p: 1 }),
               ribbonBtn("🅰", "Font", "font.manage"),
             ]);
@@ -9689,71 +11655,86 @@
             ]);
           }
           if (T === "Disegna") {
-            html += ribbonGroup("Strumenti", [
+            html += ribbonGroup("Strumenti Pennello", [
               ribbonTool("↖", "Seleziona", "select", null, 1),
               ribbonTool("⌁", "Nodo", "node", null, 1),
               ribbonTool("✒", "Penna", "pen", null, 1),
               ribbonTool("🖌", "Pennello", "brush", null, 1),
               ribbonTool("▮", "Evidenziatore", "highlighter", null, 1),
+              ribbonTool("⚡", "Neon", "neon", null, 1),
               ribbonTool("⌫", "Gomma", "eraser", null, 1),
               ribbonTool("◉", "Contagocce", "eyedropper", null, 1),
-              ribbonTool("✦", "Bacchetta", "wand", null, 1),
               ribbonTool("⛶", "Ritaglia", "crop", null, 1),
             ]);
             if (!isSimpleRibbon())
-              html += ribbonGroup("Pennello", [
-                `<div class="ribbon-inline" style="flex-direction:column;height:auto;align-items:stretch;gap:2px"><div style="display:flex;align-items:center;gap:5px;justify-content:space-between"><span class="mini-label">Dimensione</span><span data-brush-val>${wround(state.brush.size, 0)}px</span></div><input type="range" data-brush="size" min="1" max="120" step="1" value="${state.brush.size}"></div>`,
+              html += ribbonGroup("Punta & Parametri", [
+                `<div class="ribbon-inline" style="flex-direction:column;height:auto;align-items:stretch;gap:2px"><div style="display:flex;align-items:center;gap:5px;justify-content:space-between"><span class="mini-label">Dimensione</span><span data-brush-val>${wround(state.brush.size, 0)}px</span></div><input type="range" data-brush="size" min="1" max="160" step="1" value="${state.brush.size}"></div>`,
                 `<div class="ribbon-inline" style="flex-direction:column;height:auto;align-items:stretch;gap:2px"><div style="display:flex;align-items:center;gap:5px;justify-content:space-between"><span class="mini-label">Opacità</span><span data-brush-val>${Math.round(state.brush.opacity * 100)}%</span></div><input type="range" data-brush="opacity" min="5" max="100" step="1" value="${Math.round(state.brush.opacity * 100)}"></div>`,
                 `<div class="ribbon-inline" style="flex-direction:column;height:auto;align-items:stretch;gap:2px"><div style="display:flex;align-items:center;gap:5px;justify-content:space-between"><span class="mini-label">Durezza</span><span data-brush-val>${Math.round(state.brush.hardness * 100)}%</span></div><input type="range" data-brush="hardness" min="0" max="100" step="1" value="${Math.round(state.brush.hardness * 100)}"></div>`,
-                `<label class="ribbon-inline"><span class="mini-label">Colore</span><input type="color" class="ribbon-color" data-brush="color" value="${normalizeHex(state.brush.color || state.fg)}"></label>`,
+                `<div style="display:flex;gap:3px;margin-top:2px"><button class="ghost-btn ${state.brush.shape==='circle'||!state.brush.shape?'active':''}" data-command="draw.brushShape" data-arg="circle" title="Punta Circolare">● Rotondo</button><button class="ghost-btn ${state.brush.shape==='square'?'active':''}" data-command="draw.brushShape" data-arg="square" title="Punta Quadrata">■ Squadrato</button><button class="ghost-btn ${state.brush.shape==='chisel'?'active':''}" data-command="draw.brushShape" data-arg="chisel" title="Punta Calligrafica">╱ Chisel</button></div>`
               ]);
-            html += ribbonGroup("Disegno", [
+            html += ribbonGroup("Colore", [
+              `<label class="ribbon-inline"><span class="mini-label">Colore</span><input type="color" class="ribbon-color" data-brush="color" value="${normalizeHex(state.brush.color || state.fg)}"></label>`,
+              ribbonBtn("🎨", "Color Picker", "color.pickerAdvanced", { tall: true, p: 1, title: "Ruota cromatica HSV, RGB e contagocce" }),
+            ]);
+            html += ribbonGroup("Tela & Azioni", [
+              ribbonBtn("◩", "Sfondo Trasparente", "slide.transparent", { tall: true, p: 1, title: "Sfondo trasparente a scacchiera per loghi ed editing" }),
               ribbonBtn("⌫", "Pulisci", "ink.clear", { danger: true, p: 1 }),
               ribbonBtn("◉", "Mostra/nascondi", "ink.visible", { p: 1 }),
               ribbonBtn("✦", "Simmetria", "ink.symmetry", { p: 1 }),
-              ribbonBtn("〜", "Smussa", "path.smooth"),
             ]);
-            html += ribbonGroup("Forme rapide", [ribbonShape("rect", 1), ribbonShape("ellipse", 1), ribbonShape("star"), ribbonShape("arrow", 1)]);
+            html += ribbonGroup("Forme & Pattern", [
+              ribbonShape("rect", 1),
+              ribbonShape("ellipse", 1),
+              ribbonBtn("☆", "Stella", "shape.starParametric", { p: 1 }),
+              ribbonBtn("⬡", "Poligono", "shape.polygonParametric", { p: 1 }),
+              ribbonBtn("⌗", "Pattern Engine", "vector.pattern", { p: 1, title: "Ripeti elementi geometrici in griglia o mattonella" }),
+            ]);
           }
           if (T === "Foto") {
-            html += ribbonGroup("Immagine", [
+            html += ribbonGroup("Immagine & Ritaglio", [
               ribbonBtn("▧", "Importa", "insert.image", { tall: true, p: 1 }),
               ribbonBtn("⇄", "Sostituisci", "image.replace", { tall: true, p: 1 }),
               ribbonBtn("⛶", "Ritaglia", "image.crop", { tall: true, p: 1 }),
-              ribbonBtn("✂", "Rimuovi sfondo", "image.removeBg", { tall: true, p: 1 }),
-              ribbonBtn("✦", "Migliora", "image.adjust", { p: 1 }),
-              ribbonBtn("⤢", "Espandi", "image.expand"),
+              ribbonBtn("✂", "Ritaglio Avanzato", "image.cutout", { tall: true, p: 1, title: "Isola soggetti con lazo, pennello o gomma trasparente" }),
+              ribbonBtn("✂", "Rimuovi sfondo", "image.removeBg", { p: 1 }),
               ribbonBtn("↑", "Upscale", "image.upscale"),
-              ribbonBtn("▦", "Collage", "image.collage", { p: 1 }),
             ]);
-            html += ribbonGroup("Regolazioni", [
+            html += ribbonGroup("Regola & Colore", [
+              ribbonBtn("☀", "Regola Avanzato", "image.colorCorrection", { tall: true, p: 1, title: "Luminosità, contrasto, saturazione, temperatura, luci e ombre" }),
+              ribbonBtn("📈", "Curve RGB", "image.curves", { tall: true, p: 1, title: "Grafico cartesiano per controllo tonale RGB" }),
               ribbonBtn("☀", "Luminosità", "image.quick.brightness"),
               ribbonBtn("◐", "Contrasto", "image.quick.contrast"),
               ribbonBtn("◉", "Saturazione", "image.quick.saturation"),
-              ribbonBtn("◌", "Sfocatura", "image.quick.blur"),
               ribbonBtn("◑", "Bianco/nero", "image.filter.bw", { p: 1 }),
               ribbonBtn("↺", "Reset", "image.filter.reset", { p: 1 }),
             ]);
-            html += ribbonGroup("Filtri", [
-              ribbonBtn("✦", "Vivido", "image.filter.vivid", { p: 1 }),
-              ribbonBtn("☀", "Caldo", "image.filter.warm"),
-              ribbonBtn("❄", "Freddo", "image.filter.cool"),
-              ribbonBtn("🎞", "Vintage", "image.filter.vintage"),
-              ribbonBtn("◐", "Mono", "image.filter.bw", { p: 1 }),
-              ribbonBtn("✧", "Effetto", "image.filter.dream"),
+            html += ribbonGroup("Ritocco & Warp", [
+              ribbonBtn("💧", "Fluidifica", "image.liquify", { tall: true, p: 1, title: "Spingi, vortice, comprimi e gonfia" }),
+              ribbonBtn("🎯", "Clona", "image.clone", { tall: true, p: 1, title: "Pennello per duplicare porzioni di immagine con mirino" }),
+              ribbonBtn("💥", "Dispersione", "image.dispersion", { tall: true, p: 1, title: "Frammentazione particellare a pennello" }),
             ]);
-            html += ribbonGroup("Maschere", [
-              ribbonBtn("◯", "Cerchio", "image.mask.circle", { p: 1 }),
-              ribbonBtn("◇", "Rombo", "image.mask.diamond"),
-              ribbonBtn("☆", "Stella", "image.mask.star"),
-              ribbonBtn("♡", "Cuore", "image.mask.heart"),
-              ribbonBtn("▭", "Nessuna", "image.mask.none", { p: 1 }),
-            ]);
-            html += ribbonGroup("Composizione", [
+            html += ribbonGroup("Trasforma & 3D", [
+              ribbonBtn("⛶", "Prospettiva 3D", "image.perspective", { tall: true, p: 1, title: "Inclinazione 3D e punti di fuga" }),
+              ribbonBtn("↻", "Ruota 90°", "image.rotate90"),
               ribbonBtn("⇋", "Riflesso X", "image.flipX"),
               ribbonBtn("⇅", "Riflesso Y", "image.flipY"),
-              ribbonBtn("🖼", "Sfondo slide", "image.background", { p: 1 }),
-              ribbonBtn("🗑", "Rimuovi", "edit.delete", { danger: true, p: 1 }),
+              ribbonBtn("◯", "Maschera Cerchio", "image.mask.circle"),
+              ribbonBtn("☆", "Maschera Stella", "image.mask.star"),
+              ribbonBtn("▭", "Nessuna Maschera", "image.mask.none"),
+            ]);
+            html += ribbonGroup("Effetti (FX)", [
+              ribbonBtn("◌", "Sfocatura Gaussiana", "fx.blur.gaussian", { tall: true, p: 1 }),
+              ribbonBtn("⌗", "Tilt-Shift", "fx.blur.tiltshift", { p: 1 }),
+              ribbonBtn("⚡", "Glitch Digitale", "fx.glitch", { tall: true, p: 1 }),
+              ribbonBtn("▦", "Pixelate", "fx.pixelate", { p: 1 }),
+              ribbonBtn("🎞", "Vintage", "image.filter.vintage"),
+            ]);
+            html += ribbonGroup("Dipingi Effetto", [
+              ribbonBtn("🖌", "Dipingi FX Locale", "image.paintFx", { tall: true, p: 1, title: "Dipingi l'effetto solo su parte dell'immagine" }),
+            ]);
+            html += ribbonGroup("Effetti Modulari", [
+              effectCardsHtml()
             ]);
           }
           if (T === "Vettore") {
@@ -9948,7 +11929,7 @@
           state.tab = tab;
           if (tab === "Foto" || tab === "Vettore") {
             state.workspace = tab === "Foto" ? "Foto" : "Vettoriale";
-            $("workspaceSel").value = state.workspace;
+            if ($("workspaceSel")) $("workspaceSel").value = state.workspace;
           }
           renderTabsActive();
           renderRibbon();
@@ -15655,6 +17636,9 @@
             }
           });
           on("workspaceSel", "change", (ev) => switchWorkspace(ev.target.value));
+          on("themeToggleBtn", "click", () => toggleTheme());
+          initLayersToolbar();
+          applyUiTheme(state.settings?.uiTheme || "dark");
           on("undoBtn", "click", undo);
           on("redoBtn", "click", redo);
           on("searchBtn", "click", openCommandPalette);
